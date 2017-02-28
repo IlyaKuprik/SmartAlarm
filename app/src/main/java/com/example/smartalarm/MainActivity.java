@@ -1,5 +1,6 @@
 package com.example.smartalarm;
 
+import android.content.Context;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -16,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,9 +34,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
-        adapter.addFragment(new DeadlineContentFragment(), "Дедлайны");
         adapter.addFragment(new AlarmContentFragment(), "Будильники");
-        adapter.addFragment(new InfContentFragment(), "Информация");
+        adapter.addFragment(new MainContentFragment(), "Главная");
+        adapter.addFragment(new DeadlineContentFragment(), "Дедлайны");
         viewPager.setAdapter(adapter);
     }
 

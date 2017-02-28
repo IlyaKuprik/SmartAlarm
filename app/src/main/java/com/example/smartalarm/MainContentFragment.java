@@ -10,10 +10,10 @@ import android.view.ViewGroup;
  * Created by Пользователь on 26.02.2017.
  */
 
-public class InfContentFragment extends Fragment {
+public class MainContentFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.item_inf,null);
+        return inflater.inflate(R.layout.main_inf,null);
     }
 }

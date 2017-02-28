@@ -6,11 +6,13 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -29,29 +31,39 @@ public class AlarmContentFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         return recyclerView;
+
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         TextView name;
         TextView time;
         CheckBox checkSmart;
-
         public ViewHolder(LayoutInflater inflater,ViewGroup parent) {
             super(inflater.inflate(R.layout.item_alarm,parent,false));
             name=(TextView)itemView.findViewById(R.id.name);
             time=(TextView)itemView.findViewById(R.id.time);
             checkSmart=(CheckBox)itemView.findViewById(R.id.checkSmart);
+            name.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Разобраться в этой ошибке
+                    //Toast.makeText(, "Вы нажала на время", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 
     public static class ContentAdapter extends RecyclerView.Adapter<ViewHolder>{
-        private int length=2;
-        ArrayList<MyAlarmManager> alarms=new ArrayList<>(length);
+
+        private ArrayList<MyAlarmManager> alarms=new ArrayList<>();
+
         public ContentAdapter(Context context){
             Resources resources=context.getResources();
-            for (int i = 0; i <length ; i++) {
+            alarms.add(new MyAlarmManager());
+            alarms.add(new MyAlarmManager());
+            for (int i = 0; i <alarms.size() ; i++) {
                 alarms.get(i).setTime(resources.getString(R.string.default_time));
-                alarms.get(i).setName(resources.getString(R.string.alarms_number) + i);
+                alarms.get(i).setName(resources.getString(R.string.zero));
                 alarms.get(i).setSmart(false);
             }
         }
@@ -69,7 +81,7 @@ public class AlarmContentFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return length;
+            return alarms.size();
         }
     }
 }

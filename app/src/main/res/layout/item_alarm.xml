@@ -7,7 +7,7 @@
         android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/name"
+        android:id="@+id/time"
         android:layout_weight="1"
         android:textSize="40dp" />
 
@@ -19,14 +19,14 @@
 
         <TextView
             android:text="TextView"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/time"
+            android:id="@+id/name"
             android:textSize="20dp" />
 
         <CheckBox
             android:text="CheckBox"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/checkSmart" />
     </LinearLayout>

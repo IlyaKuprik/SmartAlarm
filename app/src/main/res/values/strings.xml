@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">SmartAlarm</string>
-    <string name="alarms_number">Будильник номер: </string>
+    <string name="zero" />
     <string name="default_time">00:00</string>
 </resources>
