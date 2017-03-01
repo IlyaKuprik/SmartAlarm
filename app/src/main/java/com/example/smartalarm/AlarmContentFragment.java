@@ -1,27 +1,31 @@
 package com.example.smartalarm;
 
+import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Пользователь on 26.02.2017.
  */
 
 public class AlarmContentFragment extends Fragment {
-
+    private static final int TIME_DIALOG_ID=0;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //return inflater.inflate(R.layout.item_alarm,null);
@@ -38,19 +42,38 @@ public class AlarmContentFragment extends Fragment {
         TextView name;
         TextView time;
         CheckBox checkSmart;
-        public ViewHolder(LayoutInflater inflater,ViewGroup parent) {
+        TimePicker timePicker;
+        Button timeButton;
+        public ViewHolder(LayoutInflater inflater, ViewGroup parent, final Context context) {
             super(inflater.inflate(R.layout.item_alarm,parent,false));
             name=(TextView)itemView.findViewById(R.id.name);
             time=(TextView)itemView.findViewById(R.id.time);
             checkSmart=(CheckBox)itemView.findViewById(R.id.checkSmart);
-            name.setOnClickListener(new View.OnClickListener() {
+
+            final Dialog dialog=new Dialog(context);
+            dialog.setContentView(R.layout.time_picker);
+
+            timePicker=(TimePicker)dialog.findViewById(R.id.timePicker);
+            timePicker.setIs24HourView(true);
+
+            timeButton=(Button)dialog.findViewById(R.id.applyTimeButton);
+            timeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //Разобраться в этой ошибке
-                    //Toast.makeText(, "Вы нажала на время", Toast.LENGTH_SHORT).show();
+                    time.setText(String.valueOf(timePicker.getCurrentHour()+":"+timePicker.getCurrentMinute()));
+                    dialog.dismiss();
                 }
             });
-        }
+
+
+
+            time.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                dialog.show();
+                }
+            });
+                    }
     }
 
     public static class ContentAdapter extends RecyclerView.Adapter<ViewHolder>{
@@ -69,7 +92,7 @@ public class AlarmContentFragment extends Fragment {
         }
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new ViewHolder(LayoutInflater.from(parent.getContext()),parent);
+            return new ViewHolder(LayoutInflater.from(parent.getContext()),parent,parent.getContext());
         }
 
         @Override
