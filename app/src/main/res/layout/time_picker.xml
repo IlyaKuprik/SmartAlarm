@@ -14,7 +14,9 @@
         android:paddingBottom="0dp"
         android:paddingTop="0dp"
         android:elevation="1dp"
-        android:paddingStart="0dp" />
+        android:paddingStart="0dp"
+        android:paddingLeft="0dp"
+        />
 
     <LinearLayout
         android:orientation="horizontal"

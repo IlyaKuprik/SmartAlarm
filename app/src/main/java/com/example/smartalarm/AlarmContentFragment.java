@@ -1,13 +1,13 @@
 package com.example.smartalarm;
 
 import android.app.Dialog;
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +17,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -25,7 +27,6 @@ import java.util.Date;
  */
 
 public class AlarmContentFragment extends Fragment {
-    private static final int TIME_DIALOG_ID=0;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //return inflater.inflate(R.layout.item_alarm,null);
@@ -44,11 +45,13 @@ public class AlarmContentFragment extends Fragment {
         CheckBox checkSmart;
         TimePicker timePicker;
         Button timeButton;
+        MyAlarmManager alarm;
         public ViewHolder(LayoutInflater inflater, ViewGroup parent, final Context context) {
             super(inflater.inflate(R.layout.item_alarm,parent,false));
             name=(TextView)itemView.findViewById(R.id.name);
             time=(TextView)itemView.findViewById(R.id.time);
             checkSmart=(CheckBox)itemView.findViewById(R.id.checkSmart);
+            alarm=new MyAlarmManager();
 
             final Dialog dialog=new Dialog(context);
             dialog.setContentView(R.layout.time_picker);
@@ -60,12 +63,11 @@ public class AlarmContentFragment extends Fragment {
             timeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    time.setText(String.valueOf(timePicker.getCurrentHour()+":"+timePicker.getCurrentMinute()));
+                    alarm.setAlarm(context,timePicker.getCurrentHour(),timePicker.getCurrentMinute());
+                    time.setText(timePicker.getCurrentHour()+":"+timePicker.getCurrentMinute());
                     dialog.dismiss();
                 }
             });
-
-
 
             time.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -73,7 +75,7 @@ public class AlarmContentFragment extends Fragment {
                 dialog.show();
                 }
             });
-                    }
+            }
     }
 
     public static class ContentAdapter extends RecyclerView.Adapter<ViewHolder>{
