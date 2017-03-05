@@ -25,29 +25,31 @@ public class MyAlarmManager extends BroadcastReceiver {
     private String time;
     private boolean isSmart;
     private static final String TAG="AlarmContentFragment";
+    private int alarmId;
     @Override
     public void onReceive(Context context, Intent intent) {
         PowerManager powerManager=(PowerManager) context.getSystemService(Context.POWER_SERVICE);
         PowerManager.WakeLock wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,"TAG");
         wakeLock.acquire();
+
         Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         v.vibrate(1000);
+
         wakeLock.release();
     }
 
-    public void setAlarm(Context context,int triggerHour,int triggerMinute){
-        AlarmManager alarmManager=(AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(context,MyAlarmManager.class);
-        PendingIntent pi = PendingIntent.getBroadcast(context,0,intent,0);
-        if (!this.isSmart) {
-            Date time = new Date();
-            long interval = (triggerHour * 3600 + triggerMinute * 60) - (time.getHours() * 3600 + time.getMinutes() * 60 + time.getSeconds());
-            if (interval < 0) interval += 24 * 3600;
-            Log.wtf(TAG, String.valueOf(interval));
-            alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + interval * 1000, pi);
+    public void setAlarm(Context context,int triggerHour,int triggerMinute) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, MyAlarmManager.class);
+        SimpleDateFormat format=new SimpleDateFormat("hhmmss");
+        PendingIntent pi = PendingIntent.getBroadcast(context, Integer.parseInt(format.format(new Date())), intent, PendingIntent.FLAG_ONE_SHOT);
+        Date time = new Date();
+        long interval = (triggerHour * 3600 + triggerMinute * 60) - (time.getHours() * 3600 + time.getMinutes() * 60 + time.getSeconds());
+        if (interval < 0) interval += 24 * 3600;
+        Log.wtf(TAG, String.valueOf(interval));
+        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + interval * 1000, pi);
 
-            Toast.makeText(context,"Будильник сработает через: "+interval / 3600 + " ч " + (interval / 60) % 60 + " м",Toast.LENGTH_LONG).show();
-        }
+        Toast.makeText(context, "Будильник сработает через: " + interval / 3600 + " ч " + (interval / 60) % 60 + " м", Toast.LENGTH_LONG).show();
     }
 
     public void cancelAlarm(Context context){
@@ -79,5 +81,13 @@ public class MyAlarmManager extends BroadcastReceiver {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public int getAlarmId() {
+        return alarmId;
+    }
+
+    public void setAlarmId(int alarmId) {
+        this.alarmId = alarmId;
     }
 }

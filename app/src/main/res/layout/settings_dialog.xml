@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:text="@string/default_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/settingsTime"
+        android:textSize="50dp"
+        android:textAlignment="center" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editAlarmName"
+        android:hint="@string/alarm_name"
+        android:textAlignment="center" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkBox"
+            android:layout_weight="1"
+            android:text="@string/md" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkBox2"
+            android:layout_weight="1"
+            android:text="@string/td" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkBox3"
+            android:layout_weight="1"
+            android:text="@string/wd" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkBox4"
+            android:layout_weight="1"
+            android:text="@string/fd" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkBox5"
+            android:layout_weight="1"
+            android:text="@string/frd" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkBox6"
+            android:layout_weight="1"
+            android:text="@string/std" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkBox7"
+            android:layout_weight="1"
+            android:text="@string/sd" />
+
+    </LinearLayout>
+
+    <CheckBox
+        android:text="@string/smart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/smartBtn" />
+
+    <CheckBox
+        android:text="@string/vibrate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/vibrateBtn" />
+
+    <Button
+        android:text="@string/ok"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/applySettingsBtn" />
+
+</LinearLayout>

@@ -10,5 +10,8 @@
         <item name="colorAccent">#00B0FF</item>
         <!-- Blue -->
     </style>
+    <style name="AppTheme.MyStyle" parent="Theme.AppCompat.Light.NoActionBar">
+
+    </style>
     <style name="AppTheme" parent="AppTheme.Base" />
 </resources>

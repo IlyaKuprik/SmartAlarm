@@ -4,4 +4,14 @@
     <string name="default_time">00:00</string>
     <string name="ok">готово</string>
     <string name="cancel">отмена</string>
+    <string name="alarm_name">имя будильника</string>
+    <string name="md">пн</string>
+    <string name="td">вт</string>
+    <string name="wd">ср</string>
+    <string name="fd">чт</string>
+    <string name="frd">пт</string>
+    <string name="std">сб</string>
+    <string name="sd">вс</string>
+    <string name="smart">умный</string>
+    <string name="vibrate">вибрация</string>
 </resources>
