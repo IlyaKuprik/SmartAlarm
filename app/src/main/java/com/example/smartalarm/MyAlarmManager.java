@@ -46,7 +46,7 @@ public class MyAlarmManager extends BroadcastReceiver {
             Log.wtf(TAG, String.valueOf(interval));
             alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + interval * 1000, pi);
 
-            Toast.makeText(context,"Будильник сработает через: "+interval / 3600 + " часов " + (interval / 60) % 60 + " минут",Toast.LENGTH_LONG).show();
+            Toast.makeText(context,"Будильник сработает через: "+interval / 3600 + " ч " + (interval / 60) % 60 + " м",Toast.LENGTH_LONG).show();
         }
     }
 
