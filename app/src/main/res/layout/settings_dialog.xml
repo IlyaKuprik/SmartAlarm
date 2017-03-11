@@ -91,6 +91,12 @@
         android:id="@+id/vibrateBtn" />
 
     <Button
+        android:text="@string/zero"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/deleteAlarmBtn" />
+
+    <Button
         android:text="@string/ok"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

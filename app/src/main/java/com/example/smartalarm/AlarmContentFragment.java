@@ -7,6 +7,9 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
+import android.text.Selection;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,45 +21,51 @@ import android.widget.TimePicker;
 
 import java.util.ArrayList;
 
-/**
- * Created by Пользователь on 26.02.2017.
- */
-
 public class AlarmContentFragment extends Fragment {
+
+    static ContentAdapter contentAdapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //return inflater.inflate(R.layout.item_alarm,null);
         RecyclerView recyclerView=(RecyclerView)inflater.inflate(R.layout.recycler_view,container,false);
-        ContentAdapter contentAdapter=new ContentAdapter(recyclerView.getContext());
+        contentAdapter=new ContentAdapter();
         recyclerView.setAdapter(contentAdapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         return recyclerView;
-
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         TextView name;
         TextView time;
+        TextView settingsTime;
+
+        EditText alarmEditText;
+
+        Button timeButton;
         Button settingsBtn;
+        Button applySettingsBtn;
+        Button deleteAlarmBtn;
+
+        CheckBox smartBtn;
+        CheckBox vibrateBtn;
+
         TimePicker timePicker;
 
         MyAlarmManager alarm;
 
-        Button timeButton;
+        Dialog settingsDialog;
+        Dialog timeDialog;
 
-        TextView settingsTime;
-        EditText alarmEditText;
-        CheckBox smartBtn;
-        CheckBox vibrateBtn;
-        Button applySettingsBtn;
-        public ViewHolder(LayoutInflater inflater, ViewGroup parent, final Context context) {
-            super(inflater.inflate(R.layout.item_alarm,parent,false));
+        public ViewHolder(View view) {
+            super(view);
+            final Context context=view.getContext();
             name=(TextView)itemView.findViewById(R.id.name);
             time=(TextView)itemView.findViewById(R.id.time);
             alarm=new MyAlarmManager();
 
-            final Dialog timeDialog=new Dialog(context);
+            timeDialog=new Dialog(context);
             timeDialog.setContentView(R.layout.time_picker);
 
             timePicker=(TimePicker)timeDialog.findViewById(R.id.timePicker);
@@ -79,7 +88,7 @@ public class AlarmContentFragment extends Fragment {
                 }
             });
 
-            final Dialog settingsDialog=new Dialog(context);
+            settingsDialog=new Dialog(context);
             settingsDialog.setContentView(R.layout.settings_dialog);
 
             settingsTime=(TextView)settingsDialog.findViewById(R.id.settingsTime);
@@ -95,6 +104,8 @@ public class AlarmContentFragment extends Fragment {
                 }
             });
 
+            deleteAlarmBtn=(Button)settingsDialog.findViewById(R.id.deleteAlarmBtn);
+
             applySettingsBtn=(Button)settingsDialog.findViewById(R.id.applySettingsBtn);
             applySettingsBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -103,34 +114,36 @@ public class AlarmContentFragment extends Fragment {
                     settingsDialog.dismiss();
                 }
             });
-
-            }
-
+        }
     }
 
     public static class ContentAdapter extends RecyclerView.Adapter<ViewHolder>{
 
-        private ArrayList<MyAlarmManager> alarms=new ArrayList<>();
+        protected static ArrayList<MyAlarmManager> alarms=new ArrayList<>();
 
-        public ContentAdapter(Context context){
-            Resources resources=context.getResources();
-            alarms.add(new MyAlarmManager());
-            alarms.add(new MyAlarmManager());
+        @Override
+        public ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
+            View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.item_alarm,parent,false);
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(final ViewHolder holder,final int position) {
             for (int i = 0; i <alarms.size() ; i++) {
-                alarms.get(i).setTime(resources.getString(R.string.default_time));
-                alarms.get(i).setName(resources.getString(R.string.zero));
+                alarms.get(i).setTime("00:00");
+                alarms.get(i).setName("");
                 alarms.get(i).setAlarmId(i);
             }
-        }
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new ViewHolder(LayoutInflater.from(parent.getContext()),parent,parent.getContext());
-        }
-
-        @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
             holder.name.setText(alarms.get(position).getName());
             holder.time.setText(alarms.get(position).getTime());
+            holder.deleteAlarmBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alarms.remove(alarms.get(position));
+                    notifyDataSetChanged();
+                    holder.settingsDialog.dismiss();
+                }
+            });
         }
 
         @Override

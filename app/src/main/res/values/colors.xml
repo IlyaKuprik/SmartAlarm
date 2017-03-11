@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="border">#CCCCCC</color>
     <color name="alarm_background">#ffffff</color>
+    <color name="colorAccent2">#cc3266</color>
 </resources>
