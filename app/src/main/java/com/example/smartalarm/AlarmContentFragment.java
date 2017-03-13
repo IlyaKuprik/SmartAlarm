@@ -25,6 +25,8 @@ public class AlarmContentFragment extends Fragment {
 
     static ContentAdapter contentAdapter;
 
+    private static final String TAG = "AlarmContentFragment";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //return inflater.inflate(R.layout.item_alarm,null);
@@ -77,6 +79,7 @@ public class AlarmContentFragment extends Fragment {
                 public void onClick(View v) {
                     alarm.setAlarm(context,timePicker.getCurrentHour(),timePicker.getCurrentMinute());
                     time.setText(timePicker.getCurrentHour()+":"+timePicker.getCurrentMinute());
+                    Log.e(TAG,String.valueOf(alarm.getAlarmId()));
                     timeDialog.dismiss();
                 }
             });

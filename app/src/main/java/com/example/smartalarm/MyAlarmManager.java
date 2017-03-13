@@ -16,9 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- * Created by Пользователь on 26.02.2017.
- */
+
 
 public class MyAlarmManager extends BroadcastReceiver {
     private String name;
@@ -41,8 +39,7 @@ public class MyAlarmManager extends BroadcastReceiver {
     public void setAlarm(Context context,int triggerHour,int triggerMinute) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, MyAlarmManager.class);
-        SimpleDateFormat format=new SimpleDateFormat("hhmmss");
-        PendingIntent pi = PendingIntent.getBroadcast(context, Integer.parseInt(format.format(new Date())), intent, PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent pi = PendingIntent.getBroadcast(context,this.alarmId, intent, PendingIntent.FLAG_ONE_SHOT);
         Date time = new Date();
         long interval = (triggerHour * 3600 + triggerMinute * 60) - (time.getHours() * 3600 + time.getMinutes() * 60 + time.getSeconds());
         if (interval < 0) interval += 24 * 3600;
