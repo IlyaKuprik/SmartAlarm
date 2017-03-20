@@ -23,7 +23,7 @@ public class MyAlarmManager extends BroadcastReceiver {
     private String time;
     private boolean isSmart;
     private static final String TAG="AlarmContentFragment";
-    private int alarmId;
+    private int alarmId = -1;
     @Override
     public void onReceive(Context context, Intent intent) {
         PowerManager powerManager=(PowerManager) context.getSystemService(Context.POWER_SERVICE);
@@ -39,7 +39,7 @@ public class MyAlarmManager extends BroadcastReceiver {
     public void setAlarm(Context context,int triggerHour,int triggerMinute) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, MyAlarmManager.class);
-        PendingIntent pi = PendingIntent.getBroadcast(context,this.alarmId, intent, PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent pi = PendingIntent.getBroadcast(context,alarmId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         Date time = new Date();
         long interval = (triggerHour * 3600 + triggerMinute * 60) - (time.getHours() * 3600 + time.getMinutes() * 60 + time.getSeconds());
         if (interval < 0) interval += 24 * 3600;
@@ -51,9 +51,23 @@ public class MyAlarmManager extends BroadcastReceiver {
 
     public void cancelAlarm(Context context){
         Intent intent = new Intent(context,MyAlarmManager.class);
-        PendingIntent sender = PendingIntent.getBroadcast(context,0,intent,0);
+        PendingIntent sender = PendingIntent.getBroadcast(context,alarmId,intent,PendingIntent.FLAG_CANCEL_CURRENT);
         AlarmManager alarmManager=(AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(sender);
+        Log.wtf(TAG,String.valueOf(alarmId));
+    }
+
+    public void setRepareAlarm(Context context,int triggerHour,int triggerMinute) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, MyAlarmManager.class);
+        PendingIntent pi = PendingIntent.getBroadcast(context,alarmId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Date time = new Date();
+        long interval = (triggerHour * 3600 + triggerMinute * 60) - (time.getHours() * 3600 + time.getMinutes() * 60 + time.getSeconds());
+        if (interval < 0) interval += 24 * 3600;
+        Log.wtf(TAG, String.valueOf(interval));
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 5000 , pi);
+
+        Toast.makeText(context, "Будильник сработает через: " + interval / 3600 + " ч " + (interval / 60) % 60 + " м", Toast.LENGTH_LONG).show();
     }
 
     public String getName() {

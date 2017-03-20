@@ -19,6 +19,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class AlarmContentFragment extends Fragment {
@@ -26,6 +33,7 @@ public class AlarmContentFragment extends Fragment {
     static ContentAdapter contentAdapter;
 
     private static final String TAG = "AlarmContentFragment";
+    public static final String SAVED_LIST="alarmList.txt";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -79,7 +87,7 @@ public class AlarmContentFragment extends Fragment {
                 public void onClick(View v) {
                     alarm.setAlarm(context,timePicker.getCurrentHour(),timePicker.getCurrentMinute());
                     time.setText(timePicker.getCurrentHour()+":"+timePicker.getCurrentMinute());
-                    Log.e(TAG,String.valueOf(alarm.getAlarmId()));
+                    settingsTime.setText(timePicker.getCurrentHour()+":"+timePicker.getCurrentMinute());
                     timeDialog.dismiss();
                 }
             });
@@ -117,6 +125,15 @@ public class AlarmContentFragment extends Fragment {
                     settingsDialog.dismiss();
                 }
             });
+
+            settingsTime.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    timeDialog.show();
+
+
+                }
+            });
         }
     }
 
@@ -124,9 +141,11 @@ public class AlarmContentFragment extends Fragment {
 
         protected static ArrayList<MyAlarmManager> alarms=new ArrayList<>();
 
+        View view;
+
         @Override
         public ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-            View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.item_alarm,parent,false);
+            view=LayoutInflater.from(parent.getContext()).inflate(R.layout.item_alarm,parent,false);
             return new ViewHolder(view);
         }
 
@@ -135,18 +154,22 @@ public class AlarmContentFragment extends Fragment {
             for (int i = 0; i <alarms.size() ; i++) {
                 alarms.get(i).setTime("00:00");
                 alarms.get(i).setName("");
-                alarms.get(i).setAlarmId(i);
+                if(alarms.get(i).getAlarmId()==-1) {
+                    alarms.get(i).setAlarmId(i);
+                }
             }
             holder.name.setText(alarms.get(position).getName());
             holder.time.setText(alarms.get(position).getTime());
             holder.deleteAlarmBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    alarms.get(position).cancelAlarm(view.getContext());
                     alarms.remove(alarms.get(position));
                     notifyDataSetChanged();
                     holder.settingsDialog.dismiss();
                 }
             });
+
         }
 
         @Override
@@ -154,4 +177,54 @@ public class AlarmContentFragment extends Fragment {
             return alarms.size();
         }
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        saveToFile(ContentAdapter.alarms);
+        Log.wtf(TAG,String.valueOf(ContentAdapter.alarms.size()));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.wtf(TAG,"resume");
+        if (loadFromFile()!=null) {
+            ContentAdapter.alarms = loadFromFile();
+            contentAdapter.notifyDataSetChanged();
+            Log.wtf(TAG, "file is not empty");
+        }
+    }
+
+    static void saveToFile(ArrayList<MyAlarmManager> alarms){
+        try {
+            FileOutputStream fos = new FileOutputStream(SAVED_LIST);
+            ObjectOutputStream oos= new ObjectOutputStream(fos);
+            oos.writeObject(alarms);
+            oos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    static ArrayList<MyAlarmManager> loadFromFile(){
+        try {
+            FileInputStream fis = new FileInputStream(SAVED_LIST);
+            ObjectInputStream ois= new ObjectInputStream(fis);
+            ArrayList<MyAlarmManager> alarms=(ArrayList<MyAlarmManager>)ois.readObject();
+            ois.close();
+            return alarms;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
 }

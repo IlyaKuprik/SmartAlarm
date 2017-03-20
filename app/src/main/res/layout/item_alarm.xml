@@ -6,21 +6,13 @@
     android:id="@+id/alarm_layout"
     android:paddingBottom="2dp">
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:background="@color/alarm_background"
-        android:padding="5dp">
-
-        <TextView
-            android:text="@string/default_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/time"
-            android:layout_weight="1"
-            android:textSize="40dp" />
+        android:padding="2dp">
 
         <TextView
             android:text="TextView"
@@ -28,13 +20,38 @@
             android:layout_height="wrap_content"
             android:id="@+id/name"
             android:textSize="20dp"
-            android:layout_weight="1" />
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/alarmSettingsBtn" />
+            android:id="@+id/alarmSettingsBtn"
+            android:layout_below="@+id/alarmSwitch"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
-    </LinearLayout>
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/alarmSwitch"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="13dp" />
+
+        <TextView
+            android:text="@string/default_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/time"
+            android:textSize="50dp"
+            android:gravity="bottom"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
 
 </LinearLayout>

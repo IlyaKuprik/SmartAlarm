@@ -20,12 +20,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity{
     private static final String ID_SAVER="idSaver";
-    private static String ID = "";
-    int id = 0;
 
-    private SharedPreferences idSaver;
-
-    private SharedPreferences.Editor editor=idSaver.edit();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,21 +37,12 @@ public class MainActivity extends AppCompatActivity{
 
         FloatingActionButton alarmFab=(FloatingActionButton)findViewById(R.id.alarm_fab);
 
-        idSaver=getSharedPreferences(ID_SAVER, Context.MODE_PRIVATE);
-
         alarmFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(idSaver.contains(ID)){
-                    id = Integer.parseInt(idSaver.getString(ID,""));
-                }
                 MyAlarmManager alarm =new MyAlarmManager();
-                alarm.setAlarmId(id);
                 AlarmContentFragment.ContentAdapter.alarms.add(alarm);
                 AlarmContentFragment.contentAdapter.notifyDataSetChanged();
-                id++;
-                editor.putString(ID,String.valueOf(id));
-                editor.apply();
             }
         });
     }
