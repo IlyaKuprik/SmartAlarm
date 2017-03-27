@@ -10,8 +10,19 @@
         <item name="colorAccent">#00B0FF</item>
         <!-- Blue -->
     </style>
-    <style name="AppTheme.MyStyle" parent="Theme.AppCompat.Light.NoActionBar">
 
+    <style name="AppTheme.MyNightStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">#074667</item>
+        <item name="colorPrimaryDark">#053751</item>
+        <item name="colorAccent">#1276ab</item>
+        <item name="android:colorBackground">#00154e</item>
     </style>
+
+    <style name="AppTheme.MyDayStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">#1ca938</item>
+        <item name="colorPrimaryDark">#126823</item>
+        <item name="colorAccent">#45f0ff</item>
+    </style>
+
     <style name="AppTheme" parent="AppTheme.Base" />
 </resources>

@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SwitchCompat;
 import android.text.Layout;
 import android.text.Selection;
 import android.util.Log;
@@ -15,7 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -32,7 +35,6 @@ public class AlarmContentFragment extends Fragment {
 
     static ContentAdapter contentAdapter;
 
-    private static final String TAG = "AlarmContentFragment";
     public static final String SAVED_LIST="alarmList.txt";
 
     @Override
@@ -59,7 +61,7 @@ public class AlarmContentFragment extends Fragment {
         Button deleteAlarmBtn;
 
         CheckBox smartBtn;
-        CheckBox vibrateBtn;
+        Switch switchBtn;
 
         TimePicker timePicker;
 
@@ -73,6 +75,7 @@ public class AlarmContentFragment extends Fragment {
             final Context context=view.getContext();
             name=(TextView)itemView.findViewById(R.id.name);
             time=(TextView)itemView.findViewById(R.id.time);
+            switchBtn=(Switch)itemView.findViewById(R.id.alarmSwitch);
             alarm=new MyAlarmManager();
 
             timeDialog=new Dialog(context);
@@ -82,15 +85,6 @@ public class AlarmContentFragment extends Fragment {
             timePicker.setIs24HourView(true);
 
             timeButton=(Button)timeDialog.findViewById(R.id.applyTimeButton);
-            timeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    alarm.setAlarm(context,timePicker.getCurrentHour(),timePicker.getCurrentMinute());
-                    time.setText(timePicker.getCurrentHour()+":"+timePicker.getCurrentMinute());
-                    settingsTime.setText(timePicker.getCurrentHour()+":"+timePicker.getCurrentMinute());
-                    timeDialog.dismiss();
-                }
-            });
 
             time.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -130,8 +124,6 @@ public class AlarmContentFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     timeDialog.show();
-
-
                 }
             });
         }
@@ -154,7 +146,7 @@ public class AlarmContentFragment extends Fragment {
             for (int i = 0; i <alarms.size() ; i++) {
                 alarms.get(i).setTime("00:00");
                 alarms.get(i).setName("");
-                if(alarms.get(i).getAlarmId()==-1) {
+                if(alarms.get(i).getAlarmId()== - 1) {
                     alarms.get(i).setAlarmId(i);
                 }
             }
@@ -163,13 +155,46 @@ public class AlarmContentFragment extends Fragment {
             holder.deleteAlarmBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    alarms.get(position).cancelAlarm(view.getContext());
+                    if (alarms.get(position).getTriggerHour() != -1 && alarms.get(position).getTriggerMinute() != -1) {
+                        alarms.get(position).cancelAlarm(view.getContext());
+                    }
                     alarms.remove(alarms.get(position));
                     notifyDataSetChanged();
                     holder.settingsDialog.dismiss();
                 }
             });
 
+            holder.timeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!holder.smartBtn.isChecked()) {
+                        alarms.get(position).setAlarm(view.getContext(), holder.timePicker.getCurrentHour(), holder.timePicker.getCurrentMinute());
+                        holder.time.setText(holder.timePicker.getCurrentHour() + ":" + holder.timePicker.getCurrentMinute());
+                        holder.settingsTime.setText(holder.timePicker.getCurrentHour() + ":" + holder.timePicker.getCurrentMinute());
+                        holder.switchBtn.setChecked(true);
+                    }
+                    else {
+                        alarms.get(position).setSmartAlarm(view.getContext(), holder.timePicker.getCurrentHour(), holder.timePicker.getCurrentMinute());
+                        holder.time.setText(holder.timePicker.getCurrentHour() + ":" + holder.timePicker.getCurrentMinute());
+                        holder.settingsTime.setText(holder.timePicker.getCurrentHour() + ":" + holder.timePicker.getCurrentMinute());
+                        holder.switchBtn.setChecked(true);
+                    }
+                    holder.timeDialog.dismiss();
+                }
+            });
+
+            holder.switchBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (alarms.get(position).getTriggerHour() != -1 && alarms.get(position).getTriggerMinute() != -1)
+                    if (isChecked){
+                        alarms.get(position).setAlarm(view.getContext(),alarms.get(position).getTriggerHour(),alarms.get(position).getTriggerMinute());
+                    }
+                    else {
+                        alarms.get(position).cancelAlarm(view.getContext());
+                    }
+                }
+            });
         }
 
         @Override
@@ -182,17 +207,14 @@ public class AlarmContentFragment extends Fragment {
     public void onPause() {
         super.onPause();
         saveToFile(ContentAdapter.alarms);
-        Log.wtf(TAG,String.valueOf(ContentAdapter.alarms.size()));
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.wtf(TAG,"resume");
         if (loadFromFile()!=null) {
             ContentAdapter.alarms = loadFromFile();
             contentAdapter.notifyDataSetChanged();
-            Log.wtf(TAG, "file is not empty");
         }
     }
 
@@ -225,6 +247,4 @@ public class AlarmContentFragment extends Fragment {
         }
         return null;
     }
-
-
 }

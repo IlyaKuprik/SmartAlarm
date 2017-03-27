@@ -22,6 +22,8 @@ public class MyAlarmManager extends BroadcastReceiver {
     private String name;
     private String time;
     private boolean isSmart;
+    private int triggerHour = -1;
+    private int triggerMinute = -1;
     private static final String TAG="AlarmContentFragment";
     private int alarmId = -1;
     @Override
@@ -41,12 +43,35 @@ public class MyAlarmManager extends BroadcastReceiver {
         Intent intent = new Intent(context, MyAlarmManager.class);
         PendingIntent pi = PendingIntent.getBroadcast(context,alarmId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         Date time = new Date();
+        this.triggerHour=triggerHour;
+        this.triggerMinute=triggerMinute;
         long interval = (triggerHour * 3600 + triggerMinute * 60) - (time.getHours() * 3600 + time.getMinutes() * 60 + time.getSeconds());
         if (interval < 0) interval += 24 * 3600;
-        Log.wtf(TAG, String.valueOf(interval));
+        Log.wtf(TAG, "Будильник сработает через " + String.valueOf(interval) + " секунд");
         alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + interval * 1000, pi);
 
         Toast.makeText(context, "Будильник сработает через: " + interval / 3600 + " ч " + (interval / 60) % 60 + " м", Toast.LENGTH_LONG).show();
+        Log.wtf(TAG,"Добавлен будильник под номером " + String.valueOf(alarmId));
+    }
+
+    public void setSmartAlarm(Context context,int triggerHour,int triggerMinute){
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, MyAlarmManager.class);
+        PendingIntent pi = PendingIntent.getBroadcast(context,alarmId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Date time = new Date();
+        long interval = (triggerHour * 3600 + triggerMinute * 60) - (time.getHours() * 3600 + time.getMinutes() * 60 + time.getSeconds());
+        if (interval < 0) interval += 24 * 3600;
+        long counter = 2 * 3600 + 20 * 60;
+        while (interval > counter){
+            counter+=2 * 3600 + 20 * 60;
+        }
+        counter-=2 * 3600 + 20 * 60;
+        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + counter * 1000, pi);
+
+        Toast.makeText(context, "Будильник сработает через: " + counter / 3600 + " ч " + (counter / 60) % 60 + " м", Toast.LENGTH_LONG).show();
+        Log.wtf(TAG,"Добавлен умный будильник под номером " + String.valueOf(alarmId));
+        Log.wtf(TAG, "Будильник номер " + alarmId + " сработает через " + String.valueOf(counter/3600) + " ч " + String.valueOf(counter / 60 % 60) + " м ");
+
     }
 
     public void cancelAlarm(Context context){
@@ -54,7 +79,8 @@ public class MyAlarmManager extends BroadcastReceiver {
         PendingIntent sender = PendingIntent.getBroadcast(context,alarmId,intent,PendingIntent.FLAG_CANCEL_CURRENT);
         AlarmManager alarmManager=(AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(sender);
-        Log.wtf(TAG,String.valueOf(alarmId));
+        Log.wtf(TAG,"Удален будильник под номером " + String.valueOf(alarmId));
+        Toast.makeText(context, "Будильник отменен", Toast.LENGTH_SHORT).show();
     }
 
     public void setRepareAlarm(Context context,int triggerHour,int triggerMinute) {
@@ -100,5 +126,21 @@ public class MyAlarmManager extends BroadcastReceiver {
 
     public void setAlarmId(int alarmId) {
         this.alarmId = alarmId;
+    }
+
+    public int getTriggerHour() {
+        return triggerHour;
+    }
+
+    public void setTriggerHour(int triggerHour) {
+        this.triggerHour = triggerHour;
+    }
+
+    public int getTriggerMinute() {
+        return triggerMinute;
+    }
+
+    public void setTriggerMinute(int triggerMinute) {
+        this.triggerMinute = triggerMinute;
     }
 }
