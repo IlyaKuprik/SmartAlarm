@@ -206,34 +206,36 @@ public class AlarmContentFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        saveToFile(ContentAdapter.alarms);
+        saveToFile(ContentAdapter.alarms, getContext());
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (loadFromFile()!=null) {
-            ContentAdapter.alarms = loadFromFile();
+        if (loadFromFile(getContext())!=null) {
+            ContentAdapter.alarms = loadFromFile(getContext());
             contentAdapter.notifyDataSetChanged();
         }
     }
 
-    static void saveToFile(ArrayList<MyAlarmManager> alarms){
+    static void saveToFile(ArrayList<MyAlarmManager> alarms, Context context){
         try {
-            FileOutputStream fos = new FileOutputStream(SAVED_LIST);
+            Log.d("FILE_DIR", context.getFilesDir().toString());
+            FileOutputStream fos = new FileOutputStream(context.getFilesDir().toString() + "/" + SAVED_LIST);
             ObjectOutputStream oos= new ObjectOutputStream(fos);
             oos.writeObject(alarms);
             oos.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    static ArrayList<MyAlarmManager> loadFromFile(){
+    static ArrayList<MyAlarmManager> loadFromFile(Context context){
         try {
-            FileInputStream fis = new FileInputStream(SAVED_LIST);
+            FileInputStream fis = new FileInputStream(context.getFilesDir().toString() + "/" + SAVED_LIST);
             ObjectInputStream ois= new ObjectInputStream(fis);
             ArrayList<MyAlarmManager> alarms=(ArrayList<MyAlarmManager>)ois.readObject();
             ois.close();

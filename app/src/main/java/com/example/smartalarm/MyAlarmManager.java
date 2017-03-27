@@ -11,6 +11,7 @@ import android.os.Vibrator;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -18,7 +19,7 @@ import java.util.Date;
 
 
 
-public class MyAlarmManager extends BroadcastReceiver {
+public class MyAlarmManager extends BroadcastReceiver implements Serializable {
     private String name;
     private String time;
     private boolean isSmart;
