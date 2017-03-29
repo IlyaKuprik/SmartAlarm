@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity{
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity{
         alarmFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                viewPager.setCurrentItem(0);
                 MyAlarmManager alarm =new MyAlarmManager();
                 AlarmContentFragment.ContentAdapter.alarms.add(alarm);
                 AlarmContentFragment.contentAdapter.notifyDataSetChanged();

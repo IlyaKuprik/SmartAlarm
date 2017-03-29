@@ -61,71 +61,40 @@ public class AlarmContentFragment extends Fragment {
         Button deleteAlarmBtn;
 
         CheckBox smartBtn;
+        CheckBox everyDayBtn;
         Switch switchBtn;
 
         TimePicker timePicker;
-
-        MyAlarmManager alarm;
 
         Dialog settingsDialog;
         Dialog timeDialog;
 
         public ViewHolder(View view) {
             super(view);
-            final Context context=view.getContext();
-            name=(TextView)itemView.findViewById(R.id.name);
-            time=(TextView)itemView.findViewById(R.id.time);
-            switchBtn=(Switch)itemView.findViewById(R.id.alarmSwitch);
-            alarm=new MyAlarmManager();
+            final Context context = view.getContext();
 
-            timeDialog=new Dialog(context);
+            timeDialog = new Dialog(context);
+            settingsDialog = new Dialog(context);
+
             timeDialog.setContentView(R.layout.time_picker);
-
-            timePicker=(TimePicker)timeDialog.findViewById(R.id.timePicker);
-            timePicker.setIs24HourView(true);
-
-            timeButton=(Button)timeDialog.findViewById(R.id.applyTimeButton);
-
-            time.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    timeDialog.show();
-                }
-            });
-
-            settingsDialog=new Dialog(context);
             settingsDialog.setContentView(R.layout.settings_dialog);
 
-            settingsTime=(TextView)settingsDialog.findViewById(R.id.settingsTime);
-            alarmEditText=(EditText)settingsDialog.findViewById(R.id.editAlarmName);
-            smartBtn=(CheckBox)settingsDialog.findViewById(R.id.smartBtn);
+            name = (TextView)itemView.findViewById(R.id.name);
+            time = (TextView)itemView.findViewById(R.id.time);
+            settingsTime = (TextView)settingsDialog.findViewById(R.id.settingsTime);
+            alarmEditText = (EditText)settingsDialog.findViewById(R.id.editAlarmName);
 
-            settingsBtn=(Button)itemView.findViewById(R.id.alarmSettingsBtn);
+            timePicker = (TimePicker)timeDialog.findViewById(R.id.timePicker);
+            timePicker.setIs24HourView(true);
 
-            settingsBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    settingsDialog.show();
-                }
-            });
+            smartBtn = (CheckBox)settingsDialog.findViewById(R.id.smartBtn);
+            everyDayBtn = (CheckBox)settingsDialog.findViewById(R.id.everyDay);
+            switchBtn = (Switch)itemView.findViewById(R.id.alarmSwitch);
 
-            deleteAlarmBtn=(Button)settingsDialog.findViewById(R.id.deleteAlarmBtn);
-
-            applySettingsBtn=(Button)settingsDialog.findViewById(R.id.applySettingsBtn);
-            applySettingsBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (alarmEditText!=null) name.setText(String.valueOf(alarmEditText.getText()));
-                    settingsDialog.dismiss();
-                }
-            });
-
-            settingsTime.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    timeDialog.show();
-                }
-            });
+            timeButton = (Button)timeDialog.findViewById(R.id.applyTimeButton);
+            settingsBtn = (Button)itemView.findViewById(R.id.alarmSettingsBtn);
+            deleteAlarmBtn = (Button)settingsDialog.findViewById(R.id.deleteAlarmBtn);
+            applySettingsBtn = (Button)settingsDialog.findViewById(R.id.applySettingsBtn);
         }
     }
 
@@ -143,15 +112,124 @@ public class AlarmContentFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(final ViewHolder holder,final int position) {
-            for (int i = 0; i <alarms.size() ; i++) {
-                alarms.get(i).setTime("00:00");
-                alarms.get(i).setName("");
-                if(alarms.get(i).getAlarmId()== - 1) {
-                    alarms.get(i).setAlarmId(i);
-                }
+
+            if(alarms.get(position).getAlarmId()== - 1) {
+                alarms.get(position).setAlarmId(position);
+                holder.settingsDialog.show();
             }
+
+            holder.switchBtn.setChecked(alarms.get(position).isChecked());
+            holder.smartBtn.setChecked(alarms.get(position).isSmart());
+            holder.everyDayBtn.setChecked(alarms.get(position).isEveryDay());
+
             holder.name.setText(alarms.get(position).getName());
             holder.time.setText(alarms.get(position).getTime());
+            holder.settingsTime.setText(alarms.get(position).getTime());
+
+            holder.time.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    holder.timeDialog.show();
+                }
+            });
+
+            holder.timeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (alarms.get(position).getTriggerHour() != -1 && alarms.get(position).getTriggerMinute() != -1 && alarms.get(position).isChecked()) alarms.get(position).cancelAlarm(view.getContext());
+                    if (holder.smartBtn.isChecked()) {
+                        alarms.get(position).setSmartAlarm(view.getContext(), holder.timePicker.getCurrentHour(), holder.timePicker.getCurrentMinute());
+                        if (holder.timePicker.getCurrentMinute() < 10) {
+                            holder.time.setText(holder.timePicker.getCurrentHour() + ":0" + holder.timePicker.getCurrentMinute());
+                            holder.settingsTime.setText(holder.timePicker.getCurrentHour() + ":0" + holder.timePicker.getCurrentMinute());
+                        }
+                        else {
+                            holder.time.setText(holder.timePicker.getCurrentHour() + ":" + holder.timePicker.getCurrentMinute());
+                            holder.settingsTime.setText(holder.timePicker.getCurrentHour() + ":" + holder.timePicker.getCurrentMinute());
+                        }
+                    }
+                    else {
+                        if (holder.everyDayBtn.isChecked()) {
+                            alarms.get(position).setRepareAlarm(view.getContext(), holder.timePicker.getCurrentHour(), holder.timePicker.getCurrentMinute());
+                            if (holder.timePicker.getCurrentMinute() < 10) {
+                                holder.time.setText(holder.timePicker.getCurrentHour() + ":0" + holder.timePicker.getCurrentMinute());
+                                holder.settingsTime.setText(holder.timePicker.getCurrentHour() + ":0" + holder.timePicker.getCurrentMinute());
+                            }
+                            else {
+                                holder.time.setText(holder.timePicker.getCurrentHour() + ":" + holder.timePicker.getCurrentMinute());
+                                holder.settingsTime.setText(holder.timePicker.getCurrentHour() + ":" + holder.timePicker.getCurrentMinute());
+                            }
+                        } else {
+                            alarms.get(position).setAlarm(view.getContext(), holder.timePicker.getCurrentHour(), holder.timePicker.getCurrentMinute());
+                            if (holder.timePicker.getCurrentMinute() < 10) {
+                                holder.time.setText(holder.timePicker.getCurrentHour() + ":0" + holder.timePicker.getCurrentMinute());
+                                holder.settingsTime.setText(holder.timePicker.getCurrentHour() + ":0" + holder.timePicker.getCurrentMinute());
+                            } else {
+                                holder.time.setText(holder.timePicker.getCurrentHour() + ":" + holder.timePicker.getCurrentMinute());
+                                holder.settingsTime.setText(holder.timePicker.getCurrentHour() + ":" + holder.timePicker.getCurrentMinute());
+                            }
+                        }
+                    }
+                    holder.switchBtn.setChecked(true);
+                    holder.timeDialog.dismiss();
+                }
+            });
+
+            holder.smartBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) holder.everyDayBtn.setChecked(false);
+                }
+            });
+
+            holder.everyDayBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) holder.smartBtn.setChecked(false);
+                }
+            });
+
+            holder.settingsBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    holder.settingsDialog.show();
+                }
+            });
+
+            holder.settingsTime.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    holder.timeDialog.show();
+                }
+            });
+
+            holder.switchBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (alarms.get(position).getTriggerHour() != -1 && alarms.get(position).getTriggerMinute() != -1) {
+                        if (isChecked && !holder.smartBtn.isChecked() && !holder.everyDayBtn.isChecked()) {
+                            alarms.get(position).setAlarm(view.getContext(), alarms.get(position).getTriggerHour(), alarms.get(position).getTriggerMinute());
+                        } else if (isChecked && holder.smartBtn.isChecked()) {
+                            alarms.get(position).setSmartAlarm(view.getContext(), alarms.get(position).getTriggerHour(), alarms.get(position).getTriggerMinute());
+                        } else if (isChecked && holder.everyDayBtn.isChecked()) {
+                            alarms.get(position).setRepareAlarm(view.getContext(), alarms.get(position).getTriggerHour(), alarms.get(position).getTriggerMinute());
+                        } else alarms.get(position).cancelAlarm(view.getContext());
+
+                    }
+                }
+            });
+
+            holder.applySettingsBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (holder.alarmEditText!=null) {
+                        holder.name.setText(String.valueOf(holder.alarmEditText.getText()));
+                        alarms.get(position).setName(String.valueOf(holder.alarmEditText.getText()));
+                    }
+                    holder.settingsDialog.dismiss();
+                }
+            });
+
             holder.deleteAlarmBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -164,37 +242,6 @@ public class AlarmContentFragment extends Fragment {
                 }
             });
 
-            holder.timeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!holder.smartBtn.isChecked()) {
-                        alarms.get(position).setAlarm(view.getContext(), holder.timePicker.getCurrentHour(), holder.timePicker.getCurrentMinute());
-                        holder.time.setText(holder.timePicker.getCurrentHour() + ":" + holder.timePicker.getCurrentMinute());
-                        holder.settingsTime.setText(holder.timePicker.getCurrentHour() + ":" + holder.timePicker.getCurrentMinute());
-                        holder.switchBtn.setChecked(true);
-                    }
-                    else {
-                        alarms.get(position).setSmartAlarm(view.getContext(), holder.timePicker.getCurrentHour(), holder.timePicker.getCurrentMinute());
-                        holder.time.setText(holder.timePicker.getCurrentHour() + ":" + holder.timePicker.getCurrentMinute());
-                        holder.settingsTime.setText(holder.timePicker.getCurrentHour() + ":" + holder.timePicker.getCurrentMinute());
-                        holder.switchBtn.setChecked(true);
-                    }
-                    holder.timeDialog.dismiss();
-                }
-            });
-
-            holder.switchBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (alarms.get(position).getTriggerHour() != -1 && alarms.get(position).getTriggerMinute() != -1)
-                    if (isChecked){
-                        alarms.get(position).setAlarm(view.getContext(),alarms.get(position).getTriggerHour(),alarms.get(position).getTriggerMinute());
-                    }
-                    else {
-                        alarms.get(position).cancelAlarm(view.getContext());
-                    }
-                }
-            });
         }
 
         @Override
