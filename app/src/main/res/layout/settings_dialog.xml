@@ -18,6 +18,7 @@
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
+        style="@style/AppTheme.MyDayStyle"
         android:id="@+id/editAlarmName"
         android:hint="@string/alarm_name"
         android:textAlignment="center"

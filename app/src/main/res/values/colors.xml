@@ -7,5 +7,6 @@
     <color name="alarm_background">#ffffff</color>
     <color name="colorAccent2">#cc3266</color>
     <color name="switch_color">#9cfa86</color>
+    <color name="recycle_view_background">#001f58</color>
     <color name="empty">#00ffffff</color>
 </resources>

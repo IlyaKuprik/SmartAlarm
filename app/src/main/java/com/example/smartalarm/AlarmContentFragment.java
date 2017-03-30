@@ -14,10 +14,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -69,11 +72,15 @@ public class AlarmContentFragment extends Fragment {
         Dialog settingsDialog;
         Dialog timeDialog;
 
+        RelativeLayout alarmLayout;
+
         public ViewHolder(View view) {
             super(view);
             final Context context = view.getContext();
 
             timeDialog = new Dialog(context);
+            timeDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
             settingsDialog = new Dialog(context);
 
             timeDialog.setContentView(R.layout.time_picker);
@@ -95,11 +102,14 @@ public class AlarmContentFragment extends Fragment {
             settingsBtn = (Button)itemView.findViewById(R.id.alarmSettingsBtn);
             deleteAlarmBtn = (Button)settingsDialog.findViewById(R.id.deleteAlarmBtn);
             applySettingsBtn = (Button)settingsDialog.findViewById(R.id.applySettingsBtn);
+
+            alarmLayout = (RelativeLayout)itemView.findViewById(R.id.alarmLayout);
         }
     }
 
     public static class ContentAdapter extends RecyclerView.Adapter<ViewHolder>{
 
+        private static final String TAG = "AlarmContentFragment";
         protected static ArrayList<MyAlarmManager> alarms=new ArrayList<>();
 
         View view;
@@ -116,6 +126,13 @@ public class AlarmContentFragment extends Fragment {
             if(alarms.get(position).getAlarmId()== - 1) {
                 alarms.get(position).setAlarmId(position);
                 holder.settingsDialog.show();
+            }
+
+            if (alarms.get(position).getTriggerHour() == -1 ||  alarms.get(position).getTriggerHour() > 19 || alarms.get(position).getTriggerHour() < 7) {
+                holder.alarmLayout.setBackgroundResource(R.drawable.alarm_dark_background);
+            }
+            else {
+                holder.alarmLayout.setBackgroundResource(R.drawable.alarm_background);
             }
 
             holder.switchBtn.setChecked(alarms.get(position).isChecked());
@@ -169,6 +186,12 @@ public class AlarmContentFragment extends Fragment {
                                 holder.settingsTime.setText(holder.timePicker.getCurrentHour() + ":" + holder.timePicker.getCurrentMinute());
                             }
                         }
+                    }
+                    if (alarms.get(position).getTriggerHour() == -1 ||  alarms.get(position).getTriggerHour() > 19 || alarms.get(position).getTriggerHour() < 7) {
+                        holder.alarmLayout.setBackgroundResource(R.drawable.alarm_dark_background);
+                    }
+                    else {
+                        holder.alarmLayout.setBackgroundResource(R.drawable.alarm_background);
                     }
                     holder.switchBtn.setChecked(true);
                     holder.timeDialog.dismiss();

@@ -83,7 +83,7 @@ public class MyAlarmManager extends BroadcastReceiver implements Serializable {
             counter+=2 * 3600 + 20 * 60;
         }
         counter-=2 * 3600 + 20 * 60;
-        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + counter * 1000, pi);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + counter * 1000 + 8 * 60 * 1000, pi);
 
         Toast.makeText(context, "Умный будильник сработает через: " + counter / 3600 + " ч " + (counter / 60) % 60 + " м", Toast.LENGTH_LONG).show();
         Log.wtf(TAG,"Добавлен умный будильник под номером " + String.valueOf(alarmId));
@@ -93,13 +93,15 @@ public class MyAlarmManager extends BroadcastReceiver implements Serializable {
         smart = true;
     }
 
-    public void cancelAlarm(Context context){
-        Intent intent = new Intent(context,MyAlarmManager.class);
-        PendingIntent sender = PendingIntent.getBroadcast(context,alarmId,intent,PendingIntent.FLAG_CANCEL_CURRENT);
-        AlarmManager alarmManager=(AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+    public void cancelAlarm(Context context) {
+        Intent intent = new Intent(context, MyAlarmManager.class);
+        PendingIntent sender = PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(sender);
-        Log.wtf(TAG,"Удален будильник под номером " + String.valueOf(alarmId));
-        Toast.makeText(context, "Будильник отменен", Toast.LENGTH_SHORT).show();
+        Log.wtf(TAG, "Удален будильник под номером " + String.valueOf(alarmId));
+        if (checked) {
+            Toast.makeText(context, "Будильник отменен", Toast.LENGTH_SHORT).show();
+        }
         checked = false;
     }
 

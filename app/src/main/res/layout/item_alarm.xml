@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/alarm_layout">
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:orientation="horizontal"
@@ -10,7 +9,8 @@
         android:background="@drawable/alarm_background"
         android:layout_height="105dp"
         android:paddingEnd="5dp"
-        android:paddingRight="5dp">
+        android:paddingRight="5dp"
+        android:id="@+id/alarmLayout">
 
         <TextView
             android:text="@string/zero"
