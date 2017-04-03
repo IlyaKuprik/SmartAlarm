@@ -11,5 +11,6 @@
     <string name="delete_alarm">удалить</string>
     <string name="dead_day">дата окончания: </string>
     <string name="time_to_dead">осталось: </string>
+    <string name="deadline_name">имя события</string>
 
 </resources>

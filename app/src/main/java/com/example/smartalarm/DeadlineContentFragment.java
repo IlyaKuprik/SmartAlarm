@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -30,46 +31,58 @@ import java.util.ArrayList;
 
 public class DeadlineContentFragment extends Fragment {
 
-    static AlarmContentFragment.ContentAdapter contentAdapter;
+    static DeadlineContentFragment.ContentAdapter contentAdapter;
 
     public static final String SAVED_DEADLINE_LIST="deadlineList.txt";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.item_dedline,null);
-        /* RecyclerView recyclerView=(RecyclerView)inflater.inflate(R.layout.recycler_view,container,false);
-        contentAdapter=new AlarmContentFragment.ContentAdapter();
+        //return inflater.inflate(R.layout.item_deadline,null);
+        RecyclerView recyclerView=(RecyclerView)inflater.inflate(R.layout.deadline_recycler_view,container,false);
+        contentAdapter=new DeadlineContentFragment.ContentAdapter();
         recyclerView.setAdapter(contentAdapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        return recyclerView; */
+        return recyclerView;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
+        TextView timeLeft;
+        TextView date;
 
+        TextView name;
 
         public ViewHolder(View view) {
             super(view);
+            timeLeft = (TextView)itemView.findViewById(R.id.timeLeftTextView);
+            date = (TextView)itemView.findViewById(R.id.dateTextView);
+            name = (TextView) itemView.findViewById(R.id.taskName);
 
         }
     }
 
-    public static class ContentAdapter extends RecyclerView.Adapter<AlarmContentFragment.ViewHolder>{
+    public static class ContentAdapter extends RecyclerView.Adapter<DeadlineContentFragment.ViewHolder>{
         View view;
+        static ArrayList<MyDeadlineManager> deadlines = new ArrayList<>();
+
+
+        ContentAdapter(){
+            deadlines.add(new MyDeadlineManager());
+        }
         @Override
-        public AlarmContentFragment.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-            view=LayoutInflater.from(parent.getContext()).inflate(R.layout.item_alarm,parent,false);
-            return new AlarmContentFragment.ViewHolder(view);
+        public DeadlineContentFragment.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
+            view=LayoutInflater.from(parent.getContext()).inflate(R.layout.item_deadline,parent,false);
+            return new DeadlineContentFragment.ViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(final AlarmContentFragment.ViewHolder holder, final int position) {
+        public void onBindViewHolder(final DeadlineContentFragment.ViewHolder holder, final int position) {
 
         }
 
         @Override
         public int getItemCount() {
-            return 0;
+            return deadlines.size();
         }
     }
 
