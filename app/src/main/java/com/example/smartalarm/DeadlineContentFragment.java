@@ -21,6 +21,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import org.w3c.dom.Text;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -49,14 +51,40 @@ public class DeadlineContentFragment extends Fragment {
     public static class ViewHolder extends RecyclerView.ViewHolder{
         TextView timeLeft;
         TextView date;
-
         TextView name;
+        TextView settingsDate;
+        TextView settingsTime;
+
+        EditText settingsName;
+
+        Button settings;
+        Button delete;
+        Button apply;
+
+        Dialog settingsDialog;
+
 
         public ViewHolder(View view) {
             super(view);
-            timeLeft = (TextView)itemView.findViewById(R.id.timeLeftTextView);
-            date = (TextView)itemView.findViewById(R.id.dateTextView);
+            final Context context = view.getContext();
+
+            settingsDialog = new Dialog(context);
+            settingsDialog.setContentView(R.layout.deadlines_settings_dialog);
+
+            timeLeft = (TextView) itemView.findViewById(R.id.timeLeftTextView);
+            date = (TextView) itemView.findViewById(R.id.dateTextView);
             name = (TextView) itemView.findViewById(R.id.taskName);
+            settingsDate = (TextView) settingsDialog.findViewById(R.id.date);
+            settingsTime = (TextView) settingsDialog.findViewById(R.id.time);
+
+            settingsName = (EditText) settingsDialog.findViewById(R.id.editName);
+
+            settings = (Button) itemView.findViewById(R.id.settingsBtn);
+            delete = (Button) settingsDialog.findViewById(R.id.deadlinesDeleteBtn);
+            apply = (Button) settingsDialog.findViewById(R.id.deadlinesApplyBtn);
+
+
+
 
         }
     }
@@ -77,6 +105,16 @@ public class DeadlineContentFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(final DeadlineContentFragment.ViewHolder holder, final int position) {
+
+
+
+
+            holder.settings.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    holder.settingsDialog.show();
+                }
+            });
 
         }
 

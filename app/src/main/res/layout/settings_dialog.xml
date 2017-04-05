@@ -44,7 +44,7 @@
         android:id="@+id/everyDay" />
 
     <Button
-        android:text="@string/delete_alarm"
+        android:text="@string/delete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/deleteAlarmBtn" />

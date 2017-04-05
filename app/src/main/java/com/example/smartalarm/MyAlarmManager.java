@@ -119,7 +119,7 @@ public class MyAlarmManager extends BroadcastReceiver implements Serializable {
         long interval = (triggerHour * 3600 + triggerMinute * 60) - (time.getHours() * 3600 + time.getMinutes() * 60 + time.getSeconds());
         if (interval < 0) interval += 24 * 3600;
         Log.wtf(TAG, "Ежедневный будильник сработает через " + String.valueOf(interval) + " секунд");
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + interval * 1000, 24 * 3600 * 1000 , pi);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + interval * 1000, AlarmManager.INTERVAL_DAY , pi);
 
         Toast.makeText(context, "Ежедневный будильник сработает через: " + interval / 3600 + " ч " + (interval / 60) % 60 + " м", Toast.LENGTH_LONG).show();
         Log.wtf(TAG,"Добавлен ежедневный будильник под номером " + String.valueOf(alarmId));

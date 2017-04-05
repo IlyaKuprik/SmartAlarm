@@ -8,5 +8,9 @@
     <color name="colorAccent2">#cc3266</color>
     <color name="switch_color">#9cfa86</color>
     <color name="recycle_view_background">#001f58</color>
+    <color name="red">#cc5a5e</color>
+    <color name="blue">#5a6bcc</color>
+    <color name="green">#5acc5a</color>
+    <color name="yellow">#ccca5a</color>
     <color name="empty">#00ffffff</color>
 </resources>

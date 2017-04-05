@@ -15,4 +15,8 @@ public class MyDeadlineManager extends BroadcastReceiver implements Serializable
     public void onReceive(Context context, Intent intent) {
 
     }
+
+    public void setDeadline(Context context){
+
+    }
 }
