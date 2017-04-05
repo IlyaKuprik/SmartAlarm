@@ -62,6 +62,7 @@ public class DeadlineContentFragment extends Fragment {
         Button apply;
 
         Dialog settingsDialog;
+        Dialog datePicker;
 
 
         public ViewHolder(View view) {
@@ -70,6 +71,10 @@ public class DeadlineContentFragment extends Fragment {
 
             settingsDialog = new Dialog(context);
             settingsDialog.setContentView(R.layout.deadlines_settings_dialog);
+
+            datePicker = new Dialog(context);
+            datePicker.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            datePicker.setContentView(R.layout.deadlines_date_picker);
 
             timeLeft = (TextView) itemView.findViewById(R.id.timeLeftTextView);
             date = (TextView) itemView.findViewById(R.id.dateTextView);
@@ -113,6 +118,12 @@ public class DeadlineContentFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     holder.settingsDialog.show();
+                }
+            });
+            holder.settingsDate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    holder.datePicker.show();
                 }
             });
 

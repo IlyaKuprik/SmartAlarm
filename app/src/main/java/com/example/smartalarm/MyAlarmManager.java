@@ -22,13 +22,16 @@ import java.util.Date;
 public class MyAlarmManager extends BroadcastReceiver implements Serializable {
     private String name ;
     private String time = "00:00";
+
     private boolean checked = false;
     private boolean everyDay = false;
     private boolean smart = false;
+
     private int triggerHour = -1;
     private int triggerMinute = -1;
-    private static final String TAG="AlarmContentFragment";
     private int alarmId = -1;
+
+    private static final String TAG="AlarmContentFragment";
     @Override
     public void onReceive(Context context, Intent intent) {
         PowerManager powerManager=(PowerManager) context.getSystemService(Context.POWER_SERVICE);
