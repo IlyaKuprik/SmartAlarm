@@ -5,72 +5,45 @@
     android:background="@color/border"
     android:paddingBottom="2dp">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/alarm_background">
+        android:background="@color/alarm_background"
+        android:padding="2dp"
+        android:paddingStart="5dp"
+        android:orientation="vertical"
+        android:paddingEnd="5dp">
 
         <TextView
-            android:text="TextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/taskName"
-            android:layout_weight="1"
-            android:textAlignment="center"
-            android:textSize="50dp" />
-
-        <TextView
-            android:text="@string/dead_day"
+            android:text="@string/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView2"
-            android:layout_below="@+id/taskName"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:textSize="25dp" />
-
-        <TextView
-            android:text="@string/time_to_dead"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView3"
-            android:layout_below="@+id/textView2"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:textSize="25dp" />
-
-        <TextView
-            android:text="TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/textView2"
-            android:layout_toRightOf="@+id/textView2"
-            android:layout_toEndOf="@+id/textView2"
             android:id="@+id/dateTextView"
             android:textSize="25dp" />
 
-        <TextView
-            android:text="TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/textView3"
-            android:layout_toRightOf="@+id/textView3"
-            android:layout_toEndOf="@+id/textView3"
-            android:id="@+id/timeLeftTextView"
-            android:textSize="25dp" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingBottom="5dp">
 
-        <Button
-            android:text="@string/zero"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/settingsBtn"
-            android:layout_below="@+id/dateTextView"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_alignBottom="@+id/timeLeftTextView" />
+            <TextView
+                android:text="@string/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/taskName"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:textSize="35dp" />
 
-    </RelativeLayout>
+            <Button
+                android:text="@string/zero"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/settingsBtn" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

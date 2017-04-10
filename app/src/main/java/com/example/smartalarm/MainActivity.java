@@ -25,6 +25,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity{
     private static final String ID_SAVER="idSaver";
 
+    static ViewPager viewPager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,21 +35,30 @@ public class MainActivity extends AppCompatActivity{
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
         FloatingActionButton alarmFab=(FloatingActionButton)findViewById(R.id.alarm_fab);
+        FloatingActionButton deadlineFab=(FloatingActionButton)findViewById(R.id.deadline_fab);
 
         alarmFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 viewPager.setCurrentItem(0);
-                MyAlarmManager alarm =new MyAlarmManager();
-                AlarmContentFragment.ContentAdapter.alarms.add(alarm);
+                AlarmContentFragment.ContentAdapter.alarms.add(new MyAlarmManager());
                 AlarmContentFragment.contentAdapter.notifyDataSetChanged();
+            }
+        });
+
+        deadlineFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewPager.setCurrentItem(2);
+                DeadlineContentFragment.ContentAdapter.deadlines.add(new MyDeadlineManager());
+                DeadlineContentFragment.contentAdapter.notifyDataSetChanged();
             }
         });
     }

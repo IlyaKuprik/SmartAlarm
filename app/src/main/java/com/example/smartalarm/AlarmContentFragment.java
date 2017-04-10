@@ -110,13 +110,13 @@ public class AlarmContentFragment extends Fragment {
     public static class ContentAdapter extends RecyclerView.Adapter<ViewHolder>{
 
         private static final String TAG = "AlarmContentFragment";
-        protected static ArrayList<MyAlarmManager> alarms=new ArrayList<>();
+        protected static ArrayList<MyAlarmManager> alarms = new ArrayList<>();
 
         View view;
 
         @Override
         public ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-            view=LayoutInflater.from(parent.getContext()).inflate(R.layout.item_alarm,parent,false);
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_alarm,parent,false);
             return new ViewHolder(view);
         }
 
