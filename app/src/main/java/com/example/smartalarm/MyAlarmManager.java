@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.SystemClock;
 import android.os.Vibrator;
@@ -15,6 +16,7 @@ import java.io.Serializable;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 
 
@@ -31,12 +33,21 @@ public class MyAlarmManager extends BroadcastReceiver implements Serializable {
     private int triggerMinute = -1;
     private int alarmId = -1;
 
+
+
     private static final String TAG="AlarmContentFragment";
+    private static final String ONE_TIME="ONE_TIME";
+
     @Override
     public void onReceive(Context context, Intent intent) {
         PowerManager powerManager=(PowerManager) context.getSystemService(Context.POWER_SERVICE);
         PowerManager.WakeLock wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,"TAG");
         wakeLock.acquire();
+
+        Bundle extras = intent.getExtras();
+        if (extras!=null && extras.getBoolean(ONE_TIME,Boolean.FALSE)){
+
+        }
 
         Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         v.vibrate(1000);

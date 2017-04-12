@@ -185,11 +185,11 @@ public class DeadlineContentFragment extends Fragment {
             holder.apply.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    deadlines.get(position).setDeadline(view.getContext(),calendar.getTimeInMillis());
                     if (String.valueOf(holder.settingsName.getText()) != "") {
                         holder.name.setText(holder.settingsName.getText());
-                        deadlines.get(position).setName(String.valueOf(holder.settingsName.getText()));
+                        //deadlines.get(position).setName(String.valueOf(holder.settingsName.getText()));
                     }
+                    deadlines.get(position).setDeadline(view.getContext(),calendar.getTimeInMillis(), String.valueOf(holder.settingsName.getText()));
                     holder.settingsDialog.dismiss();
                 }
             });
