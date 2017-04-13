@@ -187,7 +187,7 @@ public class DeadlineContentFragment extends Fragment {
                 public void onClick(View v) {
                     if (String.valueOf(holder.settingsName.getText()) != "") {
                         holder.name.setText(holder.settingsName.getText());
-                        //deadlines.get(position).setName(String.valueOf(holder.settingsName.getText()));
+                        deadlines.get(position).setName(String.valueOf(holder.settingsName.getText()));
                     }
                     deadlines.get(position).setDeadline(view.getContext(),calendar.getTimeInMillis(), String.valueOf(holder.settingsName.getText()));
                     holder.settingsDialog.dismiss();

@@ -21,6 +21,7 @@ import java.util.Date;
 
 public class MyDeadlineManager extends BroadcastReceiver implements Serializable{
     private StringBuilder name = new StringBuilder("Имя события");
+    private StringBuilder notificationName = new StringBuilder("Имя события");
     private String date = "дата";
     private String time = "время";
 
@@ -41,7 +42,7 @@ public class MyDeadlineManager extends BroadcastReceiver implements Serializable
         builder.setContentIntent(pi)
                 .setSmallIcon(R.drawable.small_notification_icon)
                 .setContentTitle("Напоминание")
-                .setContentText(intent.getStringExtra(String.valueOf(name)));
+                .setContentText(intent.getStringExtra(String.valueOf(notificationName)));
         Notification notification = builder.build();
         name.delete(0,name.length());
         notification.defaults = Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND;
@@ -53,10 +54,10 @@ public class MyDeadlineManager extends BroadcastReceiver implements Serializable
         wakeLock.release();
     }
 
-    public void setDeadline(Context context, long millis, String name){
+    public void setDeadline(Context context, long millis, String notificationName){
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, MyDeadlineManager.class);
-        intent.putExtra(this.name.toString() , name);
+        intent.putExtra(this.notificationName.toString() , notificationName);
         PendingIntent pi = PendingIntent.getBroadcast(context, deadlineId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.set(AlarmManager.RTC_WAKEUP, millis, pi);
         Log.e(TAG,String.valueOf((millis - System.currentTimeMillis()) / 1000));
@@ -102,5 +103,14 @@ public class MyDeadlineManager extends BroadcastReceiver implements Serializable
 
     public void setDeadlineId(int deadlineId) {
         this.deadlineId = deadlineId;
+    }
+
+    public StringBuilder getNotificationName() {
+        return notificationName;
+    }
+
+    public void setNotificationName(String notificationName) {
+        this.notificationName.delete(0,this.notificationName.length());
+        this.notificationName.append(notificationName);
     }
 }
