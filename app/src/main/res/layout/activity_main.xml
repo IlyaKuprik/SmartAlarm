@@ -33,33 +33,24 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <com.getbase.floatingactionbutton.FloatingActionsMenu
+    <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/multiaction_button"
+        android:id="@+id/alarmFab"
+        android:layout_gravity="bottom|center"
+        app:backgroundTint="@android:color/holo_blue_light"
         android:layout_margin="16dp"
-        android:layout_gravity="right|bottom"
-        app:fab_addButtonSize="normal"
-        app:fab_addButtonColorNormal="@color/colorAccent"
-        app:fab_addButtonColorPressed="@color/colorAccent2"
-        app:fab_addButtonPlusIconColor="@color/alarm_background">
+        android:src="@drawable/plus_icon"/>
 
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/alarm_fab"
-            app:fab_icon="@drawable/alarm_fab"
-            app:fab_size="mini"
-            app:fab_colorNormal="@color/colorPrimary"
-            app:fab_colorPressed="@color/colorPrimaryDark"/>
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/deadline_fab"
-            app:fab_size="mini"
-            app:fab_colorNormal="@android:color/holo_green_light"
-            app:fab_colorPressed="@android:color/holo_green_dark"/>
-
-    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:id="@+id/deadlineFab"
+        android:visibility="gone"
+        android:layout_gravity="bottom|center"
+        app:backgroundTint="@android:color/holo_green_light"
+        android:layout_margin="16dp"
+        android:src="@drawable/plus_icon"/>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -21,6 +21,7 @@ import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -124,6 +125,7 @@ public class DeadlineContentFragment extends Fragment {
         @Override
         public void onBindViewHolder(final DeadlineContentFragment.ViewHolder holder, final int position) {
             final Calendar calendar = Calendar.getInstance();
+            final Context context = view.getContext();
 
             holder.name.setText(deadlines.get(position).getName());
             holder.date.setText(deadlines.get(position).getDate());
@@ -138,6 +140,13 @@ public class DeadlineContentFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     holder.settingsDialog.show();
+                }
+            });
+
+            holder.settingsName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    holder.settingsName.selectAll();
                 }
             });
 
@@ -158,13 +167,17 @@ public class DeadlineContentFragment extends Fragment {
             holder.dateApplyBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Format formatter = new SimpleDateFormat("dd.MM.yyyy");
-                    calendar.set(Calendar.YEAR, holder.dPicker.getYear());
-                    calendar.set(Calendar.MONTH, holder.dPicker.getMonth());
-                    calendar.set(Calendar.DAY_OF_MONTH, holder.dPicker.getDayOfMonth());
-                    holder.date.setText(formatter.format(calendar.getTimeInMillis()));
-                    holder.settingsDate.setText(formatter.format(calendar.getTimeInMillis()));
-                    deadlines.get(position).setDate(formatter.format(calendar.getTimeInMillis()));
+                    if (deadlines.get(position).getDate().equals("дата")){
+                        Format formatter = new SimpleDateFormat("dd.MM.yyyy");
+                        calendar.set(Calendar.YEAR, holder.dPicker.getYear());
+                        calendar.set(Calendar.MONTH, holder.dPicker.getMonth());
+                        calendar.set(Calendar.DAY_OF_MONTH, holder.dPicker.getDayOfMonth());
+                        holder.date.setText(formatter.format(calendar.getTimeInMillis()));
+                        holder.settingsDate.setText(formatter.format(calendar.getTimeInMillis()));
+                        deadlines.get(position).setDate(formatter.format(calendar.getTimeInMillis()));
+                    }
+                    else Toast.makeText(context, "", Toast.LENGTH_SHORT).show();
+
                     holder.datePicker.dismiss();
                 }
             });
@@ -189,14 +202,14 @@ public class DeadlineContentFragment extends Fragment {
                         holder.name.setText(holder.settingsName.getText());
                         deadlines.get(position).setName(String.valueOf(holder.settingsName.getText()));
                     }
-                    deadlines.get(position).setDeadline(view.getContext(),calendar.getTimeInMillis(), String.valueOf(holder.settingsName.getText()));
+                    deadlines.get(position).setDeadline(context,calendar.getTimeInMillis(), String.valueOf(holder.settingsName.getText()));
                     holder.settingsDialog.dismiss();
                 }
             });
             holder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    deadlines.get(position).cancelDeadline(view.getContext());
+                    deadlines.get(position).cancelDeadline(context);
                     deadlines.remove(position);
                     holder.settingsDialog.dismiss();
                     notifyDataSetChanged();

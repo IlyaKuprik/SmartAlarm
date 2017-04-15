@@ -2,6 +2,7 @@ package com.example.smartalarm;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,7 +16,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -42,8 +42,8 @@ public class MainActivity extends AppCompatActivity{
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        FloatingActionButton alarmFab=(FloatingActionButton)findViewById(R.id.alarm_fab);
-        FloatingActionButton deadlineFab=(FloatingActionButton)findViewById(R.id.deadline_fab);
+        final FloatingActionButton alarmFab=(FloatingActionButton)findViewById(R.id.alarmFab);
+        final FloatingActionButton deadlineFab=(FloatingActionButton)findViewById(R.id.deadlineFab);
 
         alarmFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +70,24 @@ public class MainActivity extends AppCompatActivity{
 
             @Override
             public void onPageSelected(int position) {
-
+                switch (position){
+                    case  0 :
+                        alarmFab.show();
+                        deadlineFab.hide();
+                        break;
+                    case 2 :
+                        alarmFab.hide();
+                        deadlineFab.show();
+                        break;
+                    case 1 :
+                        alarmFab.hide();
+                        deadlineFab.hide();
+                        break;
+                    default :
+                        alarmFab.hide();
+                        deadlineFab.hide();
+                        break;
+                }
             }
 
             @Override
