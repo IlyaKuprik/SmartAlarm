@@ -5,30 +5,34 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <TextView
-        android:text="@string/default_time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/settingsTime"
-        android:textSize="50dp"
-        android:textAlignment="center" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        style="@style/AppTheme.MyDayStyle"
-        android:id="@+id/editAlarmName"
-        android:hint="@string/alarm_name"
-        android:textAlignment="center"
-        android:textSize="24dp" />
-
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <TextView
+            android:text="@string/default_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/settingsTime"
+            android:textSize="50dp"
+            android:textAlignment="center"
+            android:textColor="@color/alarm_background"
+            android:textAllCaps="false"
+            android:textIsSelectable="false" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            style="@style/AppTheme.MyDayStyle"
+            android:id="@+id/editAlarmName"
+            android:hint="@string/alarm_name"
+            android:textAlignment="center"
+            android:textSize="24dp"
+            android:textColorHint="@color/alarm_background"
+            android:textColor="@color/alarm_background" />
     </LinearLayout>
 
     <CheckBox

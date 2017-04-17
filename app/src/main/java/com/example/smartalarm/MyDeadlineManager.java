@@ -22,10 +22,13 @@ import java.util.Date;
 public class MyDeadlineManager extends BroadcastReceiver implements Serializable{
     private StringBuilder name = new StringBuilder("Имя события");
     private StringBuilder notificationName = new StringBuilder("Имя события");
+
     private String date = "дата";
     private String time = "время";
 
     private int deadlineId = -1;
+
+    private boolean working = false;
 
     private static final String TAG = "DeadlineManager";
 
@@ -50,6 +53,7 @@ public class MyDeadlineManager extends BroadcastReceiver implements Serializable
         notificationManager.notify(deadlineId, builder.build());
         Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         v.vibrate(1000);
+        working = false;
 
         wakeLock.release();
     }
@@ -62,6 +66,7 @@ public class MyDeadlineManager extends BroadcastReceiver implements Serializable
         alarmManager.set(AlarmManager.RTC_WAKEUP, millis, pi);
         Log.e(TAG,String.valueOf((millis - System.currentTimeMillis()) / 1000));
         Log.e(TAG,name.toString());
+        working = true;
     }
 
     public void cancelDeadline(Context context){
@@ -69,6 +74,7 @@ public class MyDeadlineManager extends BroadcastReceiver implements Serializable
         PendingIntent sender = PendingIntent.getBroadcast(context, deadlineId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(sender);
+        working = false;
     }
 
 
@@ -112,5 +118,13 @@ public class MyDeadlineManager extends BroadcastReceiver implements Serializable
     public void setNotificationName(String notificationName) {
         this.notificationName.delete(0,this.notificationName.length());
         this.notificationName.append(notificationName);
+    }
+
+    public boolean isWorking() {
+        return working;
+    }
+
+    public void setWorking(boolean working) {
+        this.working = working;
     }
 }

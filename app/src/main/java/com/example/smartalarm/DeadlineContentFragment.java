@@ -37,6 +37,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 public class DeadlineContentFragment extends Fragment {
 
@@ -167,17 +168,13 @@ public class DeadlineContentFragment extends Fragment {
             holder.dateApplyBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (deadlines.get(position).getDate().equals("дата")){
-                        Format formatter = new SimpleDateFormat("dd.MM.yyyy");
-                        calendar.set(Calendar.YEAR, holder.dPicker.getYear());
-                        calendar.set(Calendar.MONTH, holder.dPicker.getMonth());
-                        calendar.set(Calendar.DAY_OF_MONTH, holder.dPicker.getDayOfMonth());
-                        holder.date.setText(formatter.format(calendar.getTimeInMillis()));
-                        holder.settingsDate.setText(formatter.format(calendar.getTimeInMillis()));
-                        deadlines.get(position).setDate(formatter.format(calendar.getTimeInMillis()));
-                    }
-                    else Toast.makeText(context, "", Toast.LENGTH_SHORT).show();
-
+                    Format formatter = new SimpleDateFormat("dd.MM.yyyy");
+                    calendar.set(Calendar.YEAR, holder.dPicker.getYear());
+                    calendar.set(Calendar.MONTH, holder.dPicker.getMonth());
+                    calendar.set(Calendar.DAY_OF_MONTH, holder.dPicker.getDayOfMonth());
+                    holder.date.setText(formatter.format(calendar.getTimeInMillis()));
+                    holder.settingsDate.setText(formatter.format(calendar.getTimeInMillis()));
+                    deadlines.get(position).setDate(formatter.format(calendar.getTimeInMillis()));
                     holder.datePicker.dismiss();
                 }
             });
@@ -198,12 +195,17 @@ public class DeadlineContentFragment extends Fragment {
             holder.apply.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (String.valueOf(holder.settingsName.getText()) != "") {
-                        holder.name.setText(holder.settingsName.getText());
-                        deadlines.get(position).setName(String.valueOf(holder.settingsName.getText()));
+                    if (!holder.settingsTime.getText().equals("время") || !holder.settingsDate.getText().equals("дата")) {
+                        if (!holder.settingsName.getText().equals("")) {
+                            holder.name.setText(holder.settingsName.getText());
+                            deadlines.get(position).setName(String.valueOf(holder.settingsName.getText()));
+                        }
+                        deadlines.get(position).setDeadline(context, calendar.getTimeInMillis(), String.valueOf(holder.settingsName.getText()));
+                        holder.settingsDialog.dismiss();
+                        Toast.makeText(context, "Событие установлено", Toast.LENGTH_SHORT).show();
                     }
-                    deadlines.get(position).setDeadline(context,calendar.getTimeInMillis(), String.valueOf(holder.settingsName.getText()));
-                    holder.settingsDialog.dismiss();
+                    else Toast.makeText(context, "Событие не установлено\n" +
+                            "Пожалуйста,выберите дату и время", Toast.LENGTH_SHORT).show();
                 }
             });
             holder.delete.setOnClickListener(new View.OnClickListener() {
