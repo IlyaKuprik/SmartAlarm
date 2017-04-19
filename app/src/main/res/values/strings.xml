@@ -15,5 +15,6 @@
     <string name="deadline_name">имя</string>
     <string name="color">цвет</string>
     <string name="name">имя события</string>
+    <string name="scroll">добавить элемент</string>
 
 </resources>

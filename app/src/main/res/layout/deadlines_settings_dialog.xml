@@ -51,14 +51,27 @@
                 android:layout_margin="16dp"
                 android:paddingEnd="16dp"
                 android:paddingRight="16dp" />
+
         </LinearLayout>
 
-        <CheckBox
-            android:text="CheckBox"
+        <Button
+            android:text="@string/scroll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/checkBox2"
+            android:id="@+id/addScroll"
             android:layout_weight="1" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/taskList">
+            </android.support.v7.widget.RecyclerView>
+        </ScrollView>
 
         <Button
             android:text="@string/delete"

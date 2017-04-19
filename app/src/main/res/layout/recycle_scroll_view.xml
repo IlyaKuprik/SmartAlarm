@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="@string/zero"
+        android:id="@+id/editText"
+        android:ems="10" />
+
+    <Button
+        android:text="@string/zero"
+        android:layout_width="35dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/button"
+        android:layout_weight="0.17" />
+
+    <CheckBox
+        android:text="@string/zero"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkBox"
+        android:layout_weight="1" />
+</LinearLayout>

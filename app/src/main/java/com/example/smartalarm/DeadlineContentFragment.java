@@ -17,6 +17,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -55,8 +56,46 @@ public class DeadlineContentFragment extends Fragment {
         return recyclerView;
     }
 
+    static class MiniViewHolder extends RecyclerView.ViewHolder{
+        EditText editNameOfTask;
+        Button delete;
+        CheckBox isDone;
+        public MiniViewHolder(View itemView) {
+            super(itemView);
+            editNameOfTask= (EditText)itemView.findViewById(R.id.editText);
+            delete = (Button)itemView.findViewById(R.id.button);
+            isDone = (CheckBox)itemView.findViewById(R.id.checkBox);
+        }
+    }
+
+    static class MiniContentAdapter extends RecyclerView.Adapter<MiniViewHolder> {
+        static ArrayList<ScrollElement> scroll = new ArrayList<>(0);
+        View view;
+
+        @Override
+        public MiniViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            view=LayoutInflater.from(parent.getContext()).inflate(R.layout.recycle_scroll_view,parent,false);
+            return new MiniViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(MiniViewHolder holder, final int position) {
+            holder.delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    scroll.remove(position);
+                    notifyDataSetChanged();
+                }
+            });
+        }
+
+        @Override
+        public int getItemCount() {
+            return scroll.size();
+        }
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        TextView timeLeft;
         TextView date;
         TextView name;
         TextView settingsDate;
@@ -69,6 +108,7 @@ public class DeadlineContentFragment extends Fragment {
         Button apply;
         Button dateApplyBtn;
         Button timeApplyBtn;
+        Button addScrollElement;
 
         Dialog settingsDialog;
         Dialog datePicker;
@@ -77,6 +117,9 @@ public class DeadlineContentFragment extends Fragment {
         DatePicker dPicker;
         TimePicker tPicker;
 
+        RecyclerView recyclerView;
+
+        MiniContentAdapter scrollAdapter;
 
         public ViewHolder(View view) {
             super(view);
@@ -110,6 +153,13 @@ public class DeadlineContentFragment extends Fragment {
             apply = (Button) settingsDialog.findViewById(R.id.deadlinesApplyBtn);
             dateApplyBtn = (Button) datePicker.findViewById(R.id.datePickerBtn);
             timeApplyBtn = (Button) timePicker.findViewById(R.id.applyTimeButton);
+            addScrollElement = (Button) settingsDialog.findViewById(R.id.addScroll);
+
+            recyclerView=(RecyclerView) settingsDialog.findViewById(R.id.taskList);
+            scrollAdapter = new MiniContentAdapter();
+            recyclerView.setAdapter(scrollAdapter);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
         }
     }
 
@@ -189,6 +239,14 @@ public class DeadlineContentFragment extends Fragment {
                     holder.settingsTime.setText(formatter.format(calendar.getTimeInMillis()));
                     deadlines.get(position).setTime(formatter.format(calendar.getTimeInMillis()));
                     holder.timePicker.dismiss();
+                }
+            });
+
+            holder.addScrollElement.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MiniContentAdapter.scroll.add(new ScrollElement());
+                    holder.scrollAdapter.notifyDataSetChanged();
                 }
             });
 
