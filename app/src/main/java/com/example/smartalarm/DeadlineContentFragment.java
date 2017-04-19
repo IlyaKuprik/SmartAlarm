@@ -10,21 +10,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.Window;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -33,12 +27,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.text.Format;
-import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Objects;
 
 public class DeadlineContentFragment extends Fragment {
 
@@ -121,6 +112,22 @@ public class DeadlineContentFragment extends Fragment {
 
         MiniContentAdapter scrollAdapter;
 
+        private static class OnViewGlobalLayoutListener implements ViewTreeObserver.OnGlobalLayoutListener{
+            private final static int MAX_LENGTH = 400;
+            private View view;
+
+
+            public OnViewGlobalLayoutListener(View view){
+                this.view = view;
+            }
+
+            @Override
+            public void onGlobalLayout() {
+                if (view.getHeight() > MAX_LENGTH)
+                    view.getLayoutParams().height = MAX_LENGTH;
+            }
+        }
+
         public ViewHolder(View view) {
             super(view);
             final Context context = view.getContext();
@@ -160,6 +167,8 @@ public class DeadlineContentFragment extends Fragment {
             recyclerView.setAdapter(scrollAdapter);
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            recyclerView.getViewTreeObserver()
+                    .addOnGlobalLayoutListener(new OnViewGlobalLayoutListener(recyclerView));
         }
     }
 
