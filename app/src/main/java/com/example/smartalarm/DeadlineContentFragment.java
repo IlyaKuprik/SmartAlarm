@@ -78,6 +78,7 @@ public class DeadlineContentFragment extends Fragment {
                     notifyDataSetChanged();
                 }
             });
+
         }
 
         @Override
@@ -115,10 +116,12 @@ public class DeadlineContentFragment extends Fragment {
         private static class OnViewGlobalLayoutListener implements ViewTreeObserver.OnGlobalLayoutListener{
             private final static int MAX_LENGTH = 400;
             private View view;
+            private View secView;
 
 
-            public OnViewGlobalLayoutListener(View view){
+            public OnViewGlobalLayoutListener(View view,View secView){
                 this.view = view;
+                this.secView = secView;
             }
 
             @Override
@@ -132,8 +135,8 @@ public class DeadlineContentFragment extends Fragment {
             super(view);
             final Context context = view.getContext();
 
-            settingsDialog = new Dialog(context);
-            settingsDialog.setContentView(R.layout.deadlines_settings_dialog);
+            //settingsDialog = new Dialog(context);
+            //settingsDialog.setContentView(R.layout.deadlines_settings_dialog);
 
             datePicker = new Dialog(context);
             datePicker.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -150,25 +153,25 @@ public class DeadlineContentFragment extends Fragment {
 
             date = (TextView) itemView.findViewById(R.id.dateTextView);
             name = (TextView) itemView.findViewById(R.id.taskName);
-            settingsDate = (TextView) settingsDialog.findViewById(R.id.date);
-            settingsTime = (TextView) settingsDialog.findViewById(R.id.time);
+            //settingsDate = (TextView) settingsDialog.findViewById(R.id.date);
+            //settingsTime = (TextView) settingsDialog.findViewById(R.id.time);
 
-            settingsName = (EditText) settingsDialog.findViewById(R.id.editName);
+            //settingsName = (EditText) settingsDialog.findViewById(R.id.editName);
 
             settings = (Button) itemView.findViewById(R.id.settingsBtn);
-            delete = (Button) settingsDialog.findViewById(R.id.deadlinesDeleteBtn);
-            apply = (Button) settingsDialog.findViewById(R.id.deadlinesApplyBtn);
+            //delete = (Button) settingsDialog.findViewById(R.id.deadlinesDeleteBtn);
+            //apply = (Button) settingsDialog.findViewById(R.id.deadlinesApplyBtn);
             dateApplyBtn = (Button) datePicker.findViewById(R.id.datePickerBtn);
             timeApplyBtn = (Button) timePicker.findViewById(R.id.applyTimeButton);
-            addScrollElement = (Button) settingsDialog.findViewById(R.id.addScroll);
+            //addScrollElement = (Button) settingsDialog.findViewById(R.id.addScroll);
 
-            recyclerView=(RecyclerView) settingsDialog.findViewById(R.id.taskList);
-            scrollAdapter = new MiniContentAdapter();
-            recyclerView.setAdapter(scrollAdapter);
-            recyclerView.setHasFixedSize(true);
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.getViewTreeObserver()
-                    .addOnGlobalLayoutListener(new OnViewGlobalLayoutListener(recyclerView));
+            //recyclerView=(RecyclerView) settingsDialog.findViewById(R.id.taskList);
+            //scrollAdapter = new MiniContentAdapter();
+            //recyclerView.setAdapter(scrollAdapter);
+            //recyclerView.setHasFixedSize(true);
+            //recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            //recyclerView.getViewTreeObserver()
+             //       .addOnGlobalLayoutListener(new OnViewGlobalLayoutListener(recyclerView,view));
         }
     }
 
@@ -186,6 +189,28 @@ public class DeadlineContentFragment extends Fragment {
         public void onBindViewHolder(final DeadlineContentFragment.ViewHolder holder, final int position) {
             final Calendar calendar = Calendar.getInstance();
             final Context context = view.getContext();
+
+            Dialog settingsDialog = new Dialog(context);
+            settingsDialog.setContentView(R.layout.deadlines_settings_dialog);
+
+            TextView settingsDate = (TextView) settingsDialog.findViewById(R.id.date);
+            TextView settingsTime = (TextView) settingsDialog.findViewById(R.id.time);
+
+            EditText settingsName = (EditText) settingsDialog.findViewById(R.id.editName);
+
+            Button delete = (Button) settingsDialog.findViewById(R.id.deadlinesDeleteBtn);
+            Button apply = (Button) settingsDialog.findViewById(R.id.deadlinesApplyBtn);
+
+            holder.addScrollElement = (Button) settingsDialog.findViewById(R.id.addScroll);
+
+            RecyclerView recyclerView = (RecyclerView) settingsDialog.findViewById(R.id.taskList);
+            MiniContentAdapter scrollAdapter = new MiniContentAdapter();
+            recyclerView.setAdapter(scrollAdapter);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            recyclerView.getViewTreeObserver()
+                    .addOnGlobalLayoutListener(new ViewHolder.OnViewGlobalLayoutListener(recyclerView,view));
+
 
             holder.name.setText(deadlines.get(position).getName());
             holder.date.setText(deadlines.get(position).getDate());
