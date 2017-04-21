@@ -60,7 +60,7 @@ public class DeadlineContentFragment extends Fragment {
     }
 
     static class MiniContentAdapter extends RecyclerView.Adapter<MiniViewHolder> {
-        static ArrayList<ScrollElement> scroll = new ArrayList<>(0);
+        private ArrayList<ScrollElement> scroll = new ArrayList<>(0);
         View view;
 
         @Override
@@ -84,6 +84,14 @@ public class DeadlineContentFragment extends Fragment {
         @Override
         public int getItemCount() {
             return scroll.size();
+        }
+
+        public ArrayList<ScrollElement> getScroll() {
+            return scroll;
+        }
+
+        public void setScroll(ArrayList<ScrollElement> scroll) {
+            this.scroll = scroll;
         }
     }
 
@@ -265,7 +273,7 @@ public class DeadlineContentFragment extends Fragment {
             addScrollElement.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    MiniContentAdapter.scroll.add(new ScrollElement());
+                    scrollAdapter.getScroll().add(new ScrollElement());
                     scrollAdapter.notifyDataSetChanged();
                 }
             });
