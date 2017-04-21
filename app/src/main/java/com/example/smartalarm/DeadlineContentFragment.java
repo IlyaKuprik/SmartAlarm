@@ -39,6 +39,7 @@ public class DeadlineContentFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         RecyclerView recyclerView=(RecyclerView)inflater.inflate(R.layout.deadline_recycler_view,container,false);
         contentAdapter=new DeadlineContentFragment.ContentAdapter();
         recyclerView.setAdapter(contentAdapter);
@@ -61,11 +62,12 @@ public class DeadlineContentFragment extends Fragment {
 
     static class MiniContentAdapter extends RecyclerView.Adapter<MiniViewHolder> {
         private ArrayList<ScrollElement> scroll = new ArrayList<>(0);
+        private ArrayList<String> namesOfTasks;
         View view;
 
         @Override
         public MiniViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            view=LayoutInflater.from(parent.getContext()).inflate(R.layout.recycle_scroll_view,parent,false);
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycle_scroll_view, parent, false);
             return new MiniViewHolder(view);
         }
 
@@ -78,7 +80,10 @@ public class DeadlineContentFragment extends Fragment {
                     notifyDataSetChanged();
                 }
             });
-
+            namesOfTasks = new ArrayList<>();
+            for (int i = 0; i <scroll.size() ; i++) {
+               namesOfTasks.add(String.valueOf(holder.editNameOfTask.getText()));
+            }
         }
 
         @Override
@@ -93,26 +98,55 @@ public class DeadlineContentFragment extends Fragment {
         public void setScroll(ArrayList<ScrollElement> scroll) {
             this.scroll = scroll;
         }
+
+        public void clean(){
+            int size = scroll.size();
+            if (size > 0){
+                for (int i = 0; i < size ; i++) {
+                    scroll.remove(0);
+                }
+                notifyItemRangeRemoved(0,size);
+            }
+        }
+
+        public ArrayList<String> getNamesOfTasks() {
+            return namesOfTasks;
+        }
+
+        public void setNamesOfTasks(ArrayList<String> namesOfTasks) {
+            this.namesOfTasks = namesOfTasks;
+        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         TextView date;
         TextView name;
+        TextView settingsDate;
+        TextView settingsTime;
+
+        EditText settingsName;
 
         Button settings;
+        Button delete;
+        Button apply;
         Button dateApplyBtn;
         Button timeApplyBtn;
+        Button addScrollElement;
 
+        Dialog settingsDialog;
         Dialog datePicker;
         Dialog timePicker;
 
         DatePicker dPicker;
         TimePicker tPicker;
 
+        RecyclerView recyclerView;
+
+        MiniContentAdapter scrollAdapter;
+
         private static class OnViewGlobalLayoutListener implements ViewTreeObserver.OnGlobalLayoutListener{
             private final static int MAX_LENGTH = 400;
             private View view;
-
 
             public OnViewGlobalLayoutListener(View view){
                 this.view = view;
@@ -129,8 +163,8 @@ public class DeadlineContentFragment extends Fragment {
             super(view);
             final Context context = view.getContext();
 
-            //settingsDialog = new Dialog(context);
-            //settingsDialog.setContentView(R.layout.deadlines_settings_dialog);
+            settingsDialog = new Dialog(context);
+            settingsDialog.setContentView(R.layout.deadlines_settings_dialog);
 
             datePicker = new Dialog(context);
             datePicker.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -147,25 +181,25 @@ public class DeadlineContentFragment extends Fragment {
 
             date = (TextView) itemView.findViewById(R.id.dateTextView);
             name = (TextView) itemView.findViewById(R.id.taskName);
-            //settingsDate = (TextView) settingsDialog.findViewById(R.id.date);
-            //settingsTime = (TextView) settingsDialog.findViewById(R.id.time);
+            settingsDate = (TextView) settingsDialog.findViewById(R.id.date);
+            settingsTime = (TextView) settingsDialog.findViewById(R.id.time);
 
-            //settingsName = (EditText) settingsDialog.findViewById(R.id.editName);
+            settingsName = (EditText) settingsDialog.findViewById(R.id.editName);
 
             settings = (Button) itemView.findViewById(R.id.settingsBtn);
-            //delete = (Button) settingsDialog.findViewById(R.id.deadlinesDeleteBtn);
-            //apply = (Button) settingsDialog.findViewById(R.id.deadlinesApplyBtn);
+            delete = (Button) settingsDialog.findViewById(R.id.deadlinesDeleteBtn);
+            apply = (Button) settingsDialog.findViewById(R.id.deadlinesApplyBtn);
             dateApplyBtn = (Button) datePicker.findViewById(R.id.datePickerBtn);
             timeApplyBtn = (Button) timePicker.findViewById(R.id.applyTimeButton);
-            //addScrollElement = (Button) settingsDialog.findViewById(R.id.addScroll);
+            addScrollElement = (Button) settingsDialog.findViewById(R.id.addScroll);
 
-            //recyclerView=(RecyclerView) settingsDialog.findViewById(R.id.taskList);
-            //scrollAdapter = new MiniContentAdapter();
-            //recyclerView.setAdapter(scrollAdapter);
-            //recyclerView.setHasFixedSize(true);
-            //recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            //recyclerView.getViewTreeObserver()
-             //       .addOnGlobalLayoutListener(new OnViewGlobalLayoutListener(recyclerView,view));
+            recyclerView=(RecyclerView) settingsDialog.findViewById(R.id.taskList);
+            scrollAdapter = new MiniContentAdapter();
+            recyclerView.setAdapter(scrollAdapter);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            recyclerView.getViewTreeObserver()
+                   .addOnGlobalLayoutListener(new OnViewGlobalLayoutListener(recyclerView));
         }
     }
 
@@ -184,32 +218,11 @@ public class DeadlineContentFragment extends Fragment {
             final Calendar calendar = Calendar.getInstance();
             final Context context = view.getContext();
 
-            final Dialog settingsDialog = new Dialog(context);
-            settingsDialog.setContentView(R.layout.deadlines_settings_dialog);
-
-            final TextView settingsDate = (TextView) settingsDialog.findViewById(R.id.date);
-            final TextView settingsTime = (TextView) settingsDialog.findViewById(R.id.time);
-
-            final EditText settingsName = (EditText) settingsDialog.findViewById(R.id.editName);
-
-            Button delete = (Button) settingsDialog.findViewById(R.id.deadlinesDeleteBtn);
-            Button apply = (Button) settingsDialog.findViewById(R.id.deadlinesApplyBtn);
-
-            Button addScrollElement = (Button) settingsDialog.findViewById(R.id.addScroll);
-
-            RecyclerView recyclerView = (RecyclerView) settingsDialog.findViewById(R.id.taskList);
-            final MiniContentAdapter scrollAdapter = new MiniContentAdapter();
-            recyclerView.setAdapter(scrollAdapter);
-            recyclerView.setHasFixedSize(true);
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.getViewTreeObserver()
-                    .addOnGlobalLayoutListener(new ViewHolder.OnViewGlobalLayoutListener(recyclerView));
-
-
             holder.name.setText(deadlines.get(position).getName());
             holder.date.setText(deadlines.get(position).getDate());
-            settingsDate.setText(deadlines.get(position).getDate());
-            settingsTime.setText(deadlines.get(position).getTime());
+            holder.settingsDate.setText(deadlines.get(position).getDate());
+            holder.settingsTime.setText(deadlines.get(position).getTime());
+
 
             if (deadlines.get(position).getDeadlineId() == -1){
                 deadlines.get(position).setDeadlineId(position);
@@ -218,25 +231,25 @@ public class DeadlineContentFragment extends Fragment {
             holder.settings.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    settingsDialog.show();
+                    holder.settingsDialog.show();
                 }
             });
 
-            settingsName.setOnClickListener(new View.OnClickListener() {
+            holder.settingsName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    settingsName.selectAll();
+                    holder.settingsName.selectAll();
                 }
             });
 
-            settingsDate.setOnClickListener(new View.OnClickListener() {
+            holder.settingsDate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     holder.datePicker.show();
                 }
             });
 
-            settingsTime.setOnClickListener(new View.OnClickListener() {
+            holder.settingsTime.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     holder.timePicker.show();
@@ -251,7 +264,7 @@ public class DeadlineContentFragment extends Fragment {
                     calendar.set(Calendar.MONTH, holder.dPicker.getMonth());
                     calendar.set(Calendar.DAY_OF_MONTH, holder.dPicker.getDayOfMonth());
                     holder.date.setText(formatter.format(calendar.getTimeInMillis()));
-                    settingsDate.setText(formatter.format(calendar.getTimeInMillis()));
+                    holder.settingsDate.setText(formatter.format(calendar.getTimeInMillis()));
                     deadlines.get(position).setDate(formatter.format(calendar.getTimeInMillis()));
                     holder.datePicker.dismiss();
                 }
@@ -264,42 +277,43 @@ public class DeadlineContentFragment extends Fragment {
                     calendar.set(Calendar.HOUR_OF_DAY, holder.tPicker.getCurrentHour());
                     calendar.set(Calendar.MINUTE, holder.tPicker.getCurrentMinute());
                     calendar.set(Calendar.SECOND, 0);
-                    settingsTime.setText(formatter.format(calendar.getTimeInMillis()));
+                    holder.settingsTime.setText(formatter.format(calendar.getTimeInMillis()));
                     deadlines.get(position).setTime(formatter.format(calendar.getTimeInMillis()));
                     holder.timePicker.dismiss();
                 }
             });
 
-            addScrollElement.setOnClickListener(new View.OnClickListener() {
+            holder.addScrollElement.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    scrollAdapter.getScroll().add(new ScrollElement());
-                    scrollAdapter.notifyDataSetChanged();
+                    holder.scrollAdapter.getScroll().add(new ScrollElement());
+                    holder.scrollAdapter.notifyDataSetChanged();
                 }
             });
 
-            apply.setOnClickListener(new View.OnClickListener() {
+            holder.apply.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (!settingsTime.getText().equals("время") || !settingsDate.getText().equals("дата")) {
-                        if (!settingsName.getText().equals("")) {
-                            holder.name.setText(settingsName.getText());
-                            deadlines.get(position).setName(String.valueOf(settingsName.getText()));
+                    if (!holder.settingsTime.getText().equals("время") || !holder.settingsDate.getText().equals("дата")) {
+                        if (!holder.settingsName.getText().equals("")) {
+                            holder.name.setText(holder.settingsName.getText());
+                            deadlines.get(position).setName(String.valueOf(holder.settingsName.getText()));
                         }
-                        deadlines.get(position).setDeadline(context, calendar.getTimeInMillis(), String.valueOf(settingsName.getText()));
-                        settingsDialog.dismiss();
+                        deadlines.get(position).setDeadline(context, calendar.getTimeInMillis(), String.valueOf(holder.settingsName.getText()));
+                        holder.settingsDialog.dismiss();
                         Toast.makeText(context, "Событие установлено", Toast.LENGTH_SHORT).show();
                     }
                     else Toast.makeText(context, "Событие не установлено\n" +
                             "Пожалуйста,выберите дату и время", Toast.LENGTH_SHORT).show();
                 }
             });
-            delete.setOnClickListener(new View.OnClickListener() {
+            holder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    holder.scrollAdapter.clean();
                     deadlines.get(position).cancelDeadline(context);
                     deadlines.remove(position);
-                    settingsDialog.dismiss();
+                    holder.settingsDialog.dismiss();
                     notifyDataSetChanged();
                 }
             });
@@ -360,5 +374,6 @@ public class DeadlineContentFragment extends Fragment {
     }
 
 }
+
 
 

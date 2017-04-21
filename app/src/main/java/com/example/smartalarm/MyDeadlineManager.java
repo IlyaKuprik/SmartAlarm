@@ -13,6 +13,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -31,6 +32,8 @@ public class MyDeadlineManager extends BroadcastReceiver implements Serializable
     private boolean working = false;
 
     private static final String TAG = "DeadlineManager";
+
+    private ArrayList<String> tasks = new ArrayList<>();
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -126,5 +129,13 @@ public class MyDeadlineManager extends BroadcastReceiver implements Serializable
 
     public void setWorking(boolean working) {
         this.working = working;
+    }
+
+    public ArrayList<String> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(ArrayList<String> tasks) {
+        this.tasks = tasks;
     }
 }
