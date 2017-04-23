@@ -33,7 +33,7 @@ public class MyDeadlineManager extends BroadcastReceiver implements Serializable
 
     private static final String TAG = "DeadlineManager";
 
-    private ArrayList<String> tasks = new ArrayList<>();
+    private ArrayList<ScrollElement> scroll;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -131,11 +131,11 @@ public class MyDeadlineManager extends BroadcastReceiver implements Serializable
         this.working = working;
     }
 
-    public ArrayList<String> getTasks() {
-        return tasks;
+    public ArrayList<ScrollElement> getScroll() {
+        return scroll;
     }
 
-    public void setTasks(ArrayList<String> tasks) {
-        this.tasks = tasks;
+    public void setScroll(ArrayList<ScrollElement> scroll) {
+        this.scroll = scroll;
     }
 }

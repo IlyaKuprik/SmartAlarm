@@ -62,17 +62,22 @@ public class DeadlineContentFragment extends Fragment {
 
     static class MiniContentAdapter extends RecyclerView.Adapter<MiniViewHolder> {
         private ArrayList<ScrollElement> scroll = new ArrayList<>(0);
-        private ArrayList<String> namesOfTasks;
+        MiniViewHolder holder;
         View view;
 
         @Override
         public MiniViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycle_scroll_view, parent, false);
-            return new MiniViewHolder(view);
+            holder = new MiniViewHolder(view);
+            return holder;
         }
 
         @Override
         public void onBindViewHolder(MiniViewHolder holder, final int position) {
+            scroll.get(position).setName(String.valueOf(holder.editNameOfTask.getText()));
+            scroll.get(position).setDone(holder.isDone.isChecked());
+            holder.editNameOfTask.setText(scroll.get(position).getName());
+            holder.isDone.setChecked(scroll.get(position).isDone());
             holder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -80,10 +85,6 @@ public class DeadlineContentFragment extends Fragment {
                     notifyDataSetChanged();
                 }
             });
-            namesOfTasks = new ArrayList<>();
-            for (int i = 0; i <scroll.size() ; i++) {
-               namesOfTasks.add(String.valueOf(holder.editNameOfTask.getText()));
-            }
         }
 
         @Override
@@ -97,6 +98,7 @@ public class DeadlineContentFragment extends Fragment {
 
         public void setScroll(ArrayList<ScrollElement> scroll) {
             this.scroll = scroll;
+            notifyDataSetChanged();
         }
 
         public void clean(){
@@ -107,14 +109,6 @@ public class DeadlineContentFragment extends Fragment {
                 }
                 notifyItemRangeRemoved(0,size);
             }
-        }
-
-        public ArrayList<String> getNamesOfTasks() {
-            return namesOfTasks;
-        }
-
-        public void setNamesOfTasks(ArrayList<String> namesOfTasks) {
-            this.namesOfTasks = namesOfTasks;
         }
     }
 
@@ -143,6 +137,8 @@ public class DeadlineContentFragment extends Fragment {
         RecyclerView recyclerView;
 
         MiniContentAdapter scrollAdapter;
+
+        ArrayList<ScrollElement> scroll;
 
         private static class OnViewGlobalLayoutListener implements ViewTreeObserver.OnGlobalLayoutListener{
             private final static int MAX_LENGTH = 400;
@@ -200,6 +196,8 @@ public class DeadlineContentFragment extends Fragment {
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recyclerView.getViewTreeObserver()
                    .addOnGlobalLayoutListener(new OnViewGlobalLayoutListener(recyclerView));
+
+            scroll = new ArrayList<>();
         }
     }
 
@@ -215,14 +213,20 @@ public class DeadlineContentFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(final DeadlineContentFragment.ViewHolder holder, final int position) {
+
             final Calendar calendar = Calendar.getInstance();
             final Context context = view.getContext();
-
+            if (deadlines.get(position).getScroll()!= null) {
+                holder.scrollAdapter.setScroll(deadlines.get(position).getScroll());
+            }
             holder.name.setText(deadlines.get(position).getName());
             holder.date.setText(deadlines.get(position).getDate());
             holder.settingsDate.setText(deadlines.get(position).getDate());
             holder.settingsTime.setText(deadlines.get(position).getTime());
 
+            if (holder.scrollAdapter.getScroll() != null){
+                deadlines.get(position).setScroll(holder.scrollAdapter.getScroll());
+            }
 
             if (deadlines.get(position).getDeadlineId() == -1){
                 deadlines.get(position).setDeadlineId(position);
@@ -287,6 +291,7 @@ public class DeadlineContentFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     holder.scrollAdapter.getScroll().add(new ScrollElement());
+                    deadlines.get(position).setScroll(holder.scrollAdapter.getScroll());
                     holder.scrollAdapter.notifyDataSetChanged();
                 }
             });
@@ -305,6 +310,7 @@ public class DeadlineContentFragment extends Fragment {
                     }
                     else Toast.makeText(context, "Событие не установлено\n" +
                             "Пожалуйста,выберите дату и время", Toast.LENGTH_SHORT).show();
+                    deadlines.get(position).setScroll(holder.scrollAdapter.getScroll());
                 }
             });
             holder.delete.setOnClickListener(new View.OnClickListener() {
@@ -320,6 +326,7 @@ public class DeadlineContentFragment extends Fragment {
 
         }
 
+
         @Override
         public int getItemCount() {
             return deadlines.size();
@@ -332,6 +339,9 @@ public class DeadlineContentFragment extends Fragment {
         saveToFile(ContentAdapter.deadlines,getContext());
     }
 
+
+
+
     @Override
     public void onResume() {
         super.onResume();
@@ -341,7 +351,7 @@ public class DeadlineContentFragment extends Fragment {
         }
     }
 
-    static void saveToFile(ArrayList<MyDeadlineManager> deadlines, Context context){
+    private static void saveToFile(ArrayList<MyDeadlineManager> deadlines, Context context){
         try {
             Log.d("FILE_DIR", context.getFilesDir().toString());
             FileOutputStream fos = new FileOutputStream(context.getFilesDir().toString() + "/" + SAVED_DEADLINE_LIST);
