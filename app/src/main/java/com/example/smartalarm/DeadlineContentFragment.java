@@ -61,7 +61,7 @@ public class DeadlineContentFragment extends Fragment {
     }
 
     static class MiniContentAdapter extends RecyclerView.Adapter<MiniViewHolder> {
-        private ArrayList<ScrollElement> scroll = new ArrayList<>(0);
+        private ArrayList<ScrollElement> scroll = new ArrayList<>();
         MiniViewHolder holder;
         View view;
 
@@ -74,8 +74,8 @@ public class DeadlineContentFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(MiniViewHolder holder, final int position) {
-            scroll.get(position).setName(String.valueOf(holder.editNameOfTask.getText()));
-            scroll.get(position).setDone(holder.isDone.isChecked());
+            //scroll.get(position).setName(String.valueOf(holder.editNameOfTask.getText()));
+            //scroll.get(position).setDone(holder.isDone.isChecked());
             holder.editNameOfTask.setText(scroll.get(position).getName());
             holder.isDone.setChecked(scroll.get(position).isDone());
             holder.delete.setOnClickListener(new View.OnClickListener() {
@@ -290,8 +290,8 @@ public class DeadlineContentFragment extends Fragment {
             holder.addScrollElement.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    holder.scrollAdapter.getScroll().add(new ScrollElement());
                     deadlines.get(position).setScroll(holder.scrollAdapter.getScroll());
+                    holder.scrollAdapter.getScroll().add(new ScrollElement());
                     holder.scrollAdapter.notifyDataSetChanged();
                 }
             });
