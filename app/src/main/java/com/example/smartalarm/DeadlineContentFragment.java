@@ -286,6 +286,7 @@ public class DeadlineContentFragment extends Fragment {
                     holder.timePicker.dismiss();
                 }
             });
+            //// lol
 
             holder.addScrollElement.setOnClickListener(new View.OnClickListener() {
                 @Override
