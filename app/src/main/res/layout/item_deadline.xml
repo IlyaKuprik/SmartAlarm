@@ -6,6 +6,12 @@
     android:paddingBottom="2dp">
 
     <LinearLayout
+        android:orientation="horizontal"
+        android:layout_height="match_parent"
+        android:layout_width="7sp"
+        android:id="@+id/layout"></LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/alarm_background"
@@ -39,8 +45,9 @@
 
             <Button
                 android:text="@string/zero"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="55dp"
+                android:layout_height="52dp"
+                android:background="@drawable/burgermenu"
                 android:id="@+id/settingsBtn" />
         </LinearLayout>
 

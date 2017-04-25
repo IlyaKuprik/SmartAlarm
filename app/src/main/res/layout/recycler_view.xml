@@ -8,7 +8,7 @@
     android:paddingBottom="5dp"
     android:paddingTop="5dp"
     android:scrollbars="vertical"
-    android:background="@color/recycle_view_background"
+    android:background="@drawable/background_01"
     app:layout_behavior="@string/appbar_scrolling_view_behavior" >
 
 </android.support.v7.widget.RecyclerView>

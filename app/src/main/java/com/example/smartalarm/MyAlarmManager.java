@@ -41,13 +41,16 @@ public class MyAlarmManager extends BroadcastReceiver implements Serializable {
     @Override
     public void onReceive(Context context, Intent intent) {
         PowerManager powerManager=(PowerManager) context.getSystemService(Context.POWER_SERVICE);
-        PowerManager.WakeLock wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,"TAG");
+        PowerManager.WakeLock wakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP,"TAG");
         wakeLock.acquire();
 
         Bundle extras = intent.getExtras();
         if (extras!=null && extras.getBoolean(ONE_TIME,Boolean.FALSE)){
 
         }
+        Intent intent1 = new Intent(context,AlarmActivity.class);
+        intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent1);
 
         Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         v.vibrate(1000);

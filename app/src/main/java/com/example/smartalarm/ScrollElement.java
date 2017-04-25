@@ -8,15 +8,7 @@ import java.io.Serializable;
 
 public class ScrollElement implements Serializable {
     private String name;
-    private boolean isDone;
-
-    public boolean isDone() {
-        return isDone;
-    }
-
-    public void setDone(boolean done) {
-        isDone = done;
-    }
+    private int id = -1;
 
     public String getName() {
         return name;
@@ -24,5 +16,13 @@ public class ScrollElement implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

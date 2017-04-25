@@ -6,31 +6,28 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
+        <Button
+            android:id="@+id/button"
+            android:background="@drawable/delete"
+            android:layout_width="40sp"
+            android:layout_height="55sp" />
+
         <EditText
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:text="@string/zero"
+            android:text="Name"
             android:id="@+id/editText"
-            android:ems="10"
-            android:layout_weight="1" />
+            android:layout_width="250sp" />
 
         <Button
-            android:text="@string/zero"
-            android:layout_width="35dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/button"
-            android:layout_weight="1" />
-
-        <CheckBox
-            android:text="@string/zero"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/checkBox"
-            android:layout_weight="1" />
+            android:id="@+id/add"
+            android:layout_weight="1"
+            android:background="@drawable/save"
+            android:layout_width="40sp"
+            android:layout_height="40sp" />
     </LinearLayout>
 
 </LinearLayout>

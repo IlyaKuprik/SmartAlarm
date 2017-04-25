@@ -4,15 +4,22 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <EditText
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/deadline_name"
-        android:textAlignment="center"
-        android:textSize="40dp"
-        android:id="@+id/editName"
-        android:background="@color/empty"
-        android:layout_weight="1" />
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:id="@+id/scrollView">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/deadline_name"
+            android:textAlignment="center"
+            android:textSize="40dp"
+            android:id="@+id/editName"
+            android:background="@color/empty"
+            android:layout_weight="1" />
+    </ScrollView>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -74,20 +81,27 @@
         </LinearLayout>
     </ScrollView>
 
-    <Button
-        android:text="@string/delete"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/deadlinesDeleteBtn"
-        android:layout_weight="1" />
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
-    <Button
-        android:text="@string/ok"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/deadlinesApplyBtn"
-        android:layout_weight="1"
-        />
+        <Button
+            android:text="@string/delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/deadlinesDeleteBtn"
+            android:layout_weight="1" />
+
+        <Button
+            android:text="@string/ok"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/deadlinesApplyBtn"
+            android:layout_weight="1"
+            />
+    </LinearLayout>
 
 
 </LinearLayout>

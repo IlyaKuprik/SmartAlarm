@@ -2,6 +2,8 @@ package com.example.smartalarm;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +18,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -51,12 +54,12 @@ public class DeadlineContentFragment extends Fragment {
     static class MiniViewHolder extends RecyclerView.ViewHolder{
         EditText editNameOfTask;
         Button delete;
-        CheckBox isDone;
+        Button add;
         public MiniViewHolder(View itemView) {
             super(itemView);
             editNameOfTask= (EditText)itemView.findViewById(R.id.editText);
             delete = (Button)itemView.findViewById(R.id.button);
-            isDone = (CheckBox)itemView.findViewById(R.id.checkBox);
+            add = (Button)itemView.findViewById(R.id.add);
         }
     }
 
@@ -64,6 +67,7 @@ public class DeadlineContentFragment extends Fragment {
         private ArrayList<ScrollElement> scroll = new ArrayList<>(0);
         MiniViewHolder holder;
         View view;
+        public final static int COLOR = 0x1fffcf;
 
         @Override
         public MiniViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -73,11 +77,23 @@ public class DeadlineContentFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(MiniViewHolder holder, final int position) {
-            scroll.get(position).setName(String.valueOf(holder.editNameOfTask.getText()));
-            scroll.get(position).setDone(holder.isDone.isChecked());
+        public void onBindViewHolder(final MiniViewHolder holder, final int position) {
+            if (scroll.get(position).getId() == -1) {
+                holder.add.setVisibility(View.VISIBLE);
+                holder.delete.setVisibility(View.GONE);
+                holder.editNameOfTask.setBackgroundColor(COLOR);
+                holder.editNameOfTask.setCursorVisible(true);
+                holder.editNameOfTask.setEnabled(true);
+                scroll.get(position).setId(position);
+            }
+            else{
+                holder.add.setVisibility(View.INVISIBLE);
+                holder.delete.setVisibility(View.VISIBLE);
+                holder.editNameOfTask.setBackgroundColor(Color.TRANSPARENT);
+                holder.editNameOfTask.setCursorVisible(false);
+                holder.editNameOfTask.setEnabled(false);
+            }
             holder.editNameOfTask.setText(scroll.get(position).getName());
-            holder.isDone.setChecked(scroll.get(position).isDone());
             holder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -85,6 +101,28 @@ public class DeadlineContentFragment extends Fragment {
                     notifyDataSetChanged();
                 }
             });
+            holder.add.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    scroll.get(position).setName(String.valueOf(holder.editNameOfTask.getText()));
+                    holder.editNameOfTask.setBackgroundColor(Color.TRANSPARENT);
+                    holder.editNameOfTask.setCursorVisible(false);
+                    holder.editNameOfTask.setEnabled(false);
+                    holder.add.setVisibility(View.GONE);
+                    holder.delete.setVisibility(View.VISIBLE);
+                    holder.editNameOfTask.requestFocus();
+                }
+            });
+           holder.editNameOfTask.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                   holder.add.setVisibility(View.VISIBLE);
+                   holder.delete.setVisibility(View.GONE);
+                   holder.editNameOfTask.setBackgroundColor(COLOR);
+                   holder.editNameOfTask.setCursorVisible(true);
+                   holder.editNameOfTask.setEnabled(true);
+               }
+           });
         }
 
         @Override
@@ -140,13 +178,17 @@ public class DeadlineContentFragment extends Fragment {
 
         ArrayList<ScrollElement> scroll;
 
+        ScrollView scrollView;
+
         private static class OnViewGlobalLayoutListener implements ViewTreeObserver.OnGlobalLayoutListener{
-            private final static int MAX_LENGTH = 400;
+            private int MAX_LENGTH;
             private View view;
 
-            public OnViewGlobalLayoutListener(View view){
+            public OnViewGlobalLayoutListener(View view,int length){
                 this.view = view;
+                MAX_LENGTH = length;
             }
+
 
             @Override
             public void onGlobalLayout() {
@@ -195,9 +237,12 @@ public class DeadlineContentFragment extends Fragment {
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recyclerView.getViewTreeObserver()
-                   .addOnGlobalLayoutListener(new OnViewGlobalLayoutListener(recyclerView));
+                   .addOnGlobalLayoutListener(new OnViewGlobalLayoutListener(recyclerView,400));
 
             scroll = new ArrayList<>();
+
+            scrollView = (ScrollView)settingsDialog.findViewById(R.id.scrollView);
+            scrollView.getViewTreeObserver().addOnGlobalLayoutListener(new OnViewGlobalLayoutListener(scrollView,200));
         }
     }
 
@@ -286,7 +331,7 @@ public class DeadlineContentFragment extends Fragment {
                     holder.timePicker.dismiss();
                 }
             });
-            //// lol
+
 
             holder.addScrollElement.setOnClickListener(new View.OnClickListener() {
                 @Override
