@@ -64,7 +64,7 @@ public class DeadlineContentFragment extends Fragment {
     }
 
     static class MiniContentAdapter extends RecyclerView.Adapter<MiniViewHolder> {
-        private ArrayList<ScrollElement> scroll = new ArrayList<>(0);
+        private ArrayList<ScrollElement> scroll = new ArrayList<>();
         MiniViewHolder holder;
         View view;
         public final static int COLOR = 0x1fffcf;
@@ -94,6 +94,7 @@ public class DeadlineContentFragment extends Fragment {
                 holder.editNameOfTask.setEnabled(false);
             }
             holder.editNameOfTask.setText(scroll.get(position).getName());
+
             holder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -336,8 +337,8 @@ public class DeadlineContentFragment extends Fragment {
             holder.addScrollElement.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    holder.scrollAdapter.getScroll().add(new ScrollElement());
                     deadlines.get(position).setScroll(holder.scrollAdapter.getScroll());
+                    holder.scrollAdapter.getScroll().add(new ScrollElement());
                     holder.scrollAdapter.notifyDataSetChanged();
                 }
             });
