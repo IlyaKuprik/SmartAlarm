@@ -17,7 +17,7 @@
             android:id="@+id/settingsTime"
             android:textSize="50dp"
             android:textAlignment="center"
-            android:textColor="@color/alarm_background"
+            android:textColor="@android:color/black"
             android:textAllCaps="false"
             android:textIsSelectable="false" />
 
@@ -31,8 +31,8 @@
             android:hint="@string/alarm_name"
             android:textAlignment="center"
             android:textSize="24dp"
-            android:textColorHint="@color/alarm_background"
-            android:textColor="@color/alarm_background" />
+            android:textColorHint="@color/cardview_dark_background"
+            android:textColor="@android:color/black" />
     </LinearLayout>
 
     <CheckBox
