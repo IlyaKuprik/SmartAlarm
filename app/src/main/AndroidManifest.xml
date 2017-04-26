@@ -12,8 +12,14 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.MyNightStyle">
-        <receiver android:name=".MyAlarmManager"/>
-        <receiver android:name=".MyDeadlineManager"/>
+        <receiver
+            android:name=".MyAlarmManager"
+            android:enabled="true">
+        </receiver>
+        <receiver
+            android:name=".MyDeadlineManager"
+            android:enabled="true">
+        </receiver>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
