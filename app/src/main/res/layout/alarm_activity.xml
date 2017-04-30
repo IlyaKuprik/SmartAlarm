@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/background_02">
 
     <Button
-        android:text="Button"
+        android:text="@string/wakeup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/stopButton"
-        android:onClick="onClick"
-        android:layout_centerVertical="true"
+        android:background="@drawable/cloud"
+        android:layout_marginTop="105dp"
+        android:textAlignment="gravity"
+        android:textSize="20sp"
+        android:textColor="?android:attr/editTextColor"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>

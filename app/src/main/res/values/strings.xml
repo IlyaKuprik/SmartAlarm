@@ -16,5 +16,5 @@
     <string name="color">цвет</string>
     <string name="name">имя события</string>
     <string name="scroll">добавить элемент</string>
-
+    <string name="wakeup">проснуться</string>
 </resources>

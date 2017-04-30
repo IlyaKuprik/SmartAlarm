@@ -46,7 +46,7 @@ public class MyAlarmManager extends BroadcastReceiver implements Serializable {
 
         Bundle extras = intent.getExtras();
         if (extras!=null && extras.getBoolean(ONE_TIME,Boolean.FALSE)){
-
+            checked = false;
         }
         Intent intent1 = new Intent(context,AlarmActivity.class);
         intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -61,6 +61,7 @@ public class MyAlarmManager extends BroadcastReceiver implements Serializable {
     public void setAlarm(Context context,int triggerHour,int triggerMinute) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, MyAlarmManager.class);
+        intent.putExtra(ONE_TIME,Boolean.TRUE);
         PendingIntent pi = PendingIntent.getBroadcast(context,alarmId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         Date time = new Date();
         this.triggerHour=triggerHour;
@@ -84,6 +85,7 @@ public class MyAlarmManager extends BroadcastReceiver implements Serializable {
     public void setSmartAlarm(Context context,int triggerHour,int triggerMinute){
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, MyAlarmManager.class);
+        intent.putExtra(ONE_TIME,Boolean.FALSE);
         PendingIntent pi = PendingIntent.getBroadcast(context,alarmId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         Date time = new Date();
 
@@ -125,6 +127,7 @@ public class MyAlarmManager extends BroadcastReceiver implements Serializable {
     public void setRepareAlarm(Context context,int triggerHour,int triggerMinute) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, MyAlarmManager.class);
+        intent.putExtra(ONE_TIME,Boolean.FALSE);
         PendingIntent pi = PendingIntent.getBroadcast(context,alarmId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         Date time = new Date();
         this.triggerHour=triggerHour;

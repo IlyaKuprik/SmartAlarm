@@ -11,10 +11,10 @@
         <!-- Blue -->
     </style>
 
-    <style name="AppTheme.MyNightStyle" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme.MyNightStyle" parent="Theme.Design.Light.NoActionBar">
         <item name="colorPrimary">#074667</item>
         <item name="colorPrimaryDark">#053751</item>
-        <item name="colorAccent">#1fffcf</item>
+        <item name="colorAccent">#1FFFCF</item>
     </style>
     <style name="AppTheme.MyNightStyle2" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">#b3d3e2</item>
