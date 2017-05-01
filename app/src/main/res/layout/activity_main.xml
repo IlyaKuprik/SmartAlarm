@@ -6,7 +6,6 @@
     android:background="@color/border"
     android:layout_height="match_parent">
 
-
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
@@ -20,6 +19,7 @@
             android:background="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/alarmFab"
         android:layout_gravity="bottom|center"
-        app:backgroundTint="@android:color/holo_blue_light"
+        app:backgroundTint="#00e5ff"
         android:layout_margin="16dp"
         android:src="@drawable/plus_icon"/>
 
@@ -50,7 +50,17 @@
         android:id="@+id/deadlineFab"
         android:visibility="gone"
         android:layout_gravity="bottom|center"
-        app:backgroundTint="@android:color/holo_green_light"
+        app:backgroundTint="#b2ff59"
+        android:layout_margin="16dp"
+        android:src="@drawable/plus_icon"/>
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:id="@+id/settingsFab"
+        android:layout_gravity="bottom|center"
+        android:visibility="gone"
+        app:backgroundTint="#e040fb"
         android:layout_margin="16dp"
         android:src="@drawable/plus_icon"/>
 

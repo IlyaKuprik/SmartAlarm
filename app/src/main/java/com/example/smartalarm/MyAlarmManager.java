@@ -47,6 +47,8 @@ public class MyAlarmManager extends BroadcastReceiver implements Serializable {
         Bundle extras = intent.getExtras();
         if (extras!=null && extras.getBoolean(ONE_TIME,Boolean.FALSE)){
             checked = false;
+            triggerHour = -1;
+            triggerMinute = -1;
         }
         Intent intent1 = new Intent(context,AlarmActivity.class);
         intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

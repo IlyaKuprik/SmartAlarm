@@ -17,4 +17,5 @@
     <string name="name">имя события</string>
     <string name="scroll">добавить элемент</string>
     <string name="wakeup">проснуться</string>
+    <string name="action_settings">настройки</string>
 </resources>

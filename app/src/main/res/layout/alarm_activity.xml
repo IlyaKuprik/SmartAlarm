@@ -11,11 +11,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/stopButton"
-        android:background="@drawable/cloud"
-        android:layout_marginTop="105dp"
         android:textAlignment="gravity"
         android:textSize="20sp"
         android:textColor="?android:attr/editTextColor"
-        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>

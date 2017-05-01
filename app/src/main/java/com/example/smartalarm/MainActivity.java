@@ -1,27 +1,18 @@
 package com.example.smartalarm;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-
-import java.text.Format;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity{
@@ -34,8 +25,7 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -44,13 +34,13 @@ public class MainActivity extends AppCompatActivity{
         final TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        final FloatingActionButton alarmFab=(FloatingActionButton)findViewById(R.id.alarmFab);
-        final FloatingActionButton deadlineFab=(FloatingActionButton)findViewById(R.id.deadlineFab);
+        final FloatingActionButton alarmFab = (FloatingActionButton)findViewById(R.id.alarmFab);
+        final FloatingActionButton deadlineFab = (FloatingActionButton)findViewById(R.id.deadlineFab);
+        final FloatingActionButton settingsFab =(FloatingActionButton)findViewById(R.id.settingsFab);
 
         alarmFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewPager.setCurrentItem(0);
                 AlarmContentFragment.ContentAdapter.alarms.add(new MyAlarmManager());
                 AlarmContentFragment.contentAdapter.notifyDataSetChanged();
             }
@@ -59,9 +49,14 @@ public class MainActivity extends AppCompatActivity{
         deadlineFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewPager.setCurrentItem(2);
                 DeadlineContentFragment.ContentAdapter.deadlines.add(new MyDeadlineManager());
                 DeadlineContentFragment.contentAdapter.notifyDataSetChanged();
+            }
+        });
+        settingsFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Coming soon...", Toast.LENGTH_SHORT).show();
             }
         });
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -76,14 +71,17 @@ public class MainActivity extends AppCompatActivity{
                     case  0 :
                         alarmFab.show();
                         deadlineFab.hide();
+                        settingsFab.hide();
                         break;
                     case 2 :
                         alarmFab.hide();
                         deadlineFab.show();
+                        settingsFab.hide();
                         break;
                     case 1 :
                         alarmFab.hide();
                         deadlineFab.hide();
+                        settingsFab.show();
                         break;
                     default :
                         alarmFab.hide();
@@ -137,10 +135,6 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-       // menu.add()
-        return super.onCreateOptionsMenu(menu);
-    }
+
 }
 
