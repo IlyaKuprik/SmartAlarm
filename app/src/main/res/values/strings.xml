@@ -18,4 +18,6 @@
     <string name="scroll">добавить элемент</string>
     <string name="wakeup">проснуться</string>
     <string name="action_settings">настройки</string>
+    <string name="add_deadline">Добавить задачу</string>
+    <string name="add_scroll_element">Добавить элемент</string>
 </resources>

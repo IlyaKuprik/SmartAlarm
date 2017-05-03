@@ -10,11 +10,9 @@ import android.content.Intent;
 import android.os.PowerManager;
 import android.os.Vibrator;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by Пользователь on 30.03.2017.

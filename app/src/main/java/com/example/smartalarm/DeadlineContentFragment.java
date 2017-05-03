@@ -3,7 +3,6 @@ package com.example.smartalarm;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,7 +14,6 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ScrollView;
@@ -155,7 +153,7 @@ public class DeadlineContentFragment extends Fragment {
         TextView date;
         TextView name;
         TextView settingsDate;
-        TextView settingsTime;
+        TextView addTextView;
 
         EditText settingsName;
 
@@ -203,6 +201,7 @@ public class DeadlineContentFragment extends Fragment {
             final Context context = view.getContext();
 
             settingsDialog = new Dialog(context);
+            settingsDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             settingsDialog.setContentView(R.layout.deadlines_settings_dialog);
 
             datePicker = new Dialog(context);
@@ -221,7 +220,7 @@ public class DeadlineContentFragment extends Fragment {
             date = (TextView) itemView.findViewById(R.id.dateTextView);
             name = (TextView) itemView.findViewById(R.id.taskName);
             settingsDate = (TextView) settingsDialog.findViewById(R.id.date);
-            settingsTime = (TextView) settingsDialog.findViewById(R.id.time);
+            addTextView = (TextView) settingsDialog.findViewById(R.id.addDeadlineTextView);
 
             settingsName = (EditText) settingsDialog.findViewById(R.id.editName);
 
@@ -267,8 +266,7 @@ public class DeadlineContentFragment extends Fragment {
             }
             holder.name.setText(deadlines.get(position).getName());
             holder.date.setText(deadlines.get(position).getDate());
-            holder.settingsDate.setText(deadlines.get(position).getDate());
-            holder.settingsTime.setText(deadlines.get(position).getTime());
+            holder.settingsDate.setText(deadlines.get(position).getDate() + "/" + deadlines.get(position).getTime());
 
             if (holder.scrollAdapter.getScroll() != null){
                 deadlines.get(position).setScroll(holder.scrollAdapter.getScroll());
@@ -299,12 +297,6 @@ public class DeadlineContentFragment extends Fragment {
                 }
             });
 
-            holder.settingsTime.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    holder.timePicker.show();
-                }
-            });
 
             holder.dateApplyBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -317,6 +309,7 @@ public class DeadlineContentFragment extends Fragment {
                     holder.settingsDate.setText(formatter.format(calendar.getTimeInMillis()));
                     deadlines.get(position).setDate(formatter.format(calendar.getTimeInMillis()));
                     holder.datePicker.dismiss();
+                    holder.timePicker.show();
                 }
             });
 
@@ -327,26 +320,33 @@ public class DeadlineContentFragment extends Fragment {
                     calendar.set(Calendar.HOUR_OF_DAY, holder.tPicker.getCurrentHour());
                     calendar.set(Calendar.MINUTE, holder.tPicker.getCurrentMinute());
                     calendar.set(Calendar.SECOND, 0);
-                    holder.settingsTime.setText(formatter.format(calendar.getTimeInMillis()));
+                    holder.settingsDate.append("/" + formatter.format(calendar.getTimeInMillis()));
                     deadlines.get(position).setTime(formatter.format(calendar.getTimeInMillis()));
                     holder.timePicker.dismiss();
                 }
             });
 
-
-            holder.addScrollElement.setOnClickListener(new View.OnClickListener() {
+            View.OnClickListener addScroll = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     deadlines.get(position).setScroll(holder.scrollAdapter.getScroll());
                     holder.scrollAdapter.getScroll().add(new ScrollElement());
                     holder.scrollAdapter.notifyDataSetChanged();
                 }
-            });
+            };
+
+            holder.addScrollElement.setOnClickListener(addScroll);
+            holder.addTextView.setOnClickListener(addScroll);
+
 
             holder.apply.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (!holder.settingsTime.getText().equals("время") || !holder.settingsDate.getText().equals("дата")) {
+                    if (!deadlines.get(position).getDate().equals("дата")) {
+                        if (deadlines.get(position).isWorking()){
+                            deadlines.get(position).setWorking(false);
+                            deadlines.get(position).cancelDeadline(context);
+                        }
                         if (!holder.settingsName.getText().equals("")) {
                             holder.name.setText(holder.settingsName.getText());
                             deadlines.get(position).setName(String.valueOf(holder.settingsName.getText()));

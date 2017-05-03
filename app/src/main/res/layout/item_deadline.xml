@@ -40,15 +40,16 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/taskName"
                 android:layout_weight="1"
-                android:textAlignment="center"
+                android:textAlignment="viewStart"
                 android:textSize="35dp" />
 
             <Button
                 android:text="@string/zero"
-                android:layout_width="55dp"
-                android:layout_height="52dp"
                 android:background="@drawable/burgermenu"
-                android:id="@+id/settingsBtn" />
+                android:id="@+id/settingsBtn"
+                android:layout_width="50sp"
+                android:layout_gravity="bottom"
+                android:layout_height="45sp" />
         </LinearLayout>
 
     </LinearLayout>

@@ -13,4 +13,8 @@
     <color name="green">#5acc5a</color>
     <color name="yellow">#ccca5a</color>
     <color name="empty">#00ffffff</color>
+    <color name="dialog_backgroung">#5fa3d0</color>
+    <color name="dialog_button_color">#dfc42e</color>
+    <color name="dialog_text_color">#f0fcff</color>
+
 </resources>

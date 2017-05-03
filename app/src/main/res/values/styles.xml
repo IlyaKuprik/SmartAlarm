@@ -13,20 +13,20 @@
 
     <style name="AppTheme.MyNightStyle" parent="Theme.Design.Light.NoActionBar">
         <item name="colorPrimary">#1976d2</item>
-        <!--<item name="colorPrimary">#1e88e5</item>-->
         <item name="colorPrimaryDark">#0d47a1</item>
         <item name="colorAccent">#69f0ae</item>
     </style>
-    <style name="AppTheme.MyNightStyle2" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">#b3d3e2</item>
-        <item name="colorPrimaryDark">#71a2b3</item>
-        <item name="colorAccent">#bde1c5</item>
+
+    <style name="MyCheckBox" parent="Theme.Design.Light.NoActionBar">
+        <item name="android:colorControlActivated">@color/dialog_text_color</item>
+        <item name="android:colorControlNormal">@color/cardview_dark_background</item>
     </style>
 
-    <style name="AppTheme.MyDayStyle" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">#5ed946</item>
-        <item name="colorPrimaryDark">#39831c</item>
-        <item name="colorAccent">#ff2a1f</item>
+    <style name="MyEditText" parent="Theme.Design.Light.NoActionBar">
+        <item name="android:colorControlActivated">#1976d2</item>
+        <item name="colorControlActivated">#1976d2</item>
+
+
     </style>
 
     <style name="AppTheme" parent="AppTheme.Base" />

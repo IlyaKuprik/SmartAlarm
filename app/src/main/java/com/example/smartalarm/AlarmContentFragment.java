@@ -2,14 +2,10 @@ package com.example.smartalarm;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.res.Resources;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SwitchCompat;
-import android.text.Layout;
-import android.text.Selection;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,13 +15,11 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -82,6 +76,7 @@ public class AlarmContentFragment extends Fragment {
             timeDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
             settingsDialog = new Dialog(context);
+            settingsDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
             timeDialog.setContentView(R.layout.time_picker);
             settingsDialog.setContentView(R.layout.settings_dialog);

@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity{
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
+        viewPager.setCurrentItem(1);
 
         final TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
@@ -37,6 +38,10 @@ public class MainActivity extends AppCompatActivity{
         final FloatingActionButton alarmFab = (FloatingActionButton)findViewById(R.id.alarmFab);
         final FloatingActionButton deadlineFab = (FloatingActionButton)findViewById(R.id.deadlineFab);
         final FloatingActionButton settingsFab =(FloatingActionButton)findViewById(R.id.settingsFab);
+
+        alarmFab.hide();
+        deadlineFab.hide();
+        settingsFab.hide();
 
         alarmFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +91,7 @@ public class MainActivity extends AppCompatActivity{
                     default :
                         alarmFab.hide();
                         deadlineFab.hide();
+                        settingsFab.hide();
                         break;
                 }
             }

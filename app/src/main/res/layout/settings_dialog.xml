@@ -3,60 +3,76 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:background="@color/dialog_backgroung"
+    android:orientation="vertical"
+    android:paddingTop="40sp">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <TextView
+        android:text="@string/default_time"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/settingsTime"
+        android:textSize="50dp"
+        android:textAlignment="center"
+        android:textColor="@color/dialog_text_color"
+        android:textAllCaps="false"
+        android:textIsSelectable="false" />
 
-        <TextView
-            android:text="@string/default_time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/settingsTime"
-            android:textSize="50dp"
-            android:textAlignment="center"
-            android:textColor="@android:color/black"
-            android:textAllCaps="false"
-            android:textIsSelectable="false" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            style="@style/AppTheme.MyDayStyle"
-            android:id="@+id/editAlarmName"
-            android:hint="@string/alarm_name"
-            android:textAlignment="center"
-            android:textSize="24dp"
-            android:textColorHint="@color/cardview_dark_background"
-            android:textColor="@android:color/black" />
-    </LinearLayout>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editAlarmName"
+        android:hint="@string/alarm_name"
+        android:textAlignment="center"
+        android:ems="10"
+        android:textSize="24dp"
+        android:theme="@style/MyEditText" />
 
     <CheckBox
         android:text="@string/smart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/dialog_text_color"
+        android:theme="@style/MyCheckBox"
         android:id="@+id/smartBtn" />
 
     <CheckBox
         android:text="@string/every_day"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:theme="@style/MyCheckBox"
+        android:textColor="@color/dialog_text_color"
         android:id="@+id/everyDay" />
 
-    <Button
-        android:text="@string/delete"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/deleteAlarmBtn" />
+        android:layout_height="match_parent">
 
-    <Button
-        android:text="@string/ok"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/applySettingsBtn" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_gravity="end"
+            android:layout_height="match_parent">
+
+            <Button
+                android:text="@string/delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/deleteAlarmBtn"
+                android:layout_weight="1"
+                android:textColor="@color/dialog_button_color"
+                android:background="@android:color/transparent" />
+
+            <Button
+                android:text="@string/ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/applySettingsBtn"
+                android:layout_weight="1"
+                android:textColor="@color/dialog_button_color"
+                android:background="@android:color/transparent" />
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

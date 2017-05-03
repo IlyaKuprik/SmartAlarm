@@ -2,65 +2,72 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#9575cd">
 
-    <ScrollView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:id="@+id/scrollView">
+        android:background="@color/alarm_background"
+        android:paddingTop="50dp">
 
-        <EditText
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/scrollView">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/deadline_name"
+                android:textAlignment="center"
+                android:id="@+id/editName"
+                android:theme="@style/MyEditText"
+                android:textColor="@color/cardview_dark_background"
+                android:layout_weight="1"
+                android:textSize="25dp"
+                android:textColorHint="@color/cardview_dark_background"
+                android:ems="14" />
+        </ScrollView>
+
+        <TextView
+            android:text="@string/date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/deadline_name"
-            android:textAlignment="center"
-            android:textSize="40dp"
-            android:id="@+id/editName"
-            android:background="@color/empty"
-            android:layout_weight="1" />
-    </ScrollView>
+            android:id="@+id/date"
+            android:textSize="25dp"
+            android:textColor="@color/cardview_dark_background"
+            android:textAlignment="viewStart" />
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp">
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/addScroll"
+            android:background="@drawable/plus_icon"
+            android:textColor="@color/dialog_button_color"
+            android:layout_gravity="center"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
 
         <TextView
-            android:text="@string/date"
-            android:layout_width="wrap_content"
+            android:text="@string/zero"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/date"
+            android:id="@+id/addDeadlineTextView"
             android:textSize="25dp"
-            android:textAlignment="center"
-            android:layout_weight="1"
-            android:layout_margin="16dp"
-            android:paddingStart="16dp"
-            android:paddingLeft="16dp" />
-
-        <TextView
-            android:text="@string/time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/time"
-            android:textSize="25dp"
-            android:textAlignment="center"
-            android:layout_weight="1"
-            android:layout_margin="16dp"
-            android:paddingEnd="16dp"
-            android:paddingRight="16dp" />
+            android:textColor="@color/dialog_text_color"
+            android:layout_gravity=""
+            android:layout_weight="1" />
 
     </LinearLayout>
-
-    <Button
-        android:text="@string/scroll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/addScroll"
-        android:layout_weight="1" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -70,7 +77,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp">
 
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
@@ -82,25 +93,37 @@
     </ScrollView>
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">
 
-        <Button
-            android:text="@string/delete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/deadlinesDeleteBtn"
-            android:layout_weight="1" />
-
-        <Button
-            android:text="@string/ok"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/deadlinesApplyBtn"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            />
+            android:layout_gravity="end">
+
+            <Button
+                android:text="@string/delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/deadlinesDeleteBtn"
+                android:background="@android:color/transparent"
+                android:textColor="@color/dialog_button_color"
+                android:layout_weight="1" />
+
+            <Button
+                android:text="@string/ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/deadlinesApplyBtn"
+                android:background="@android:color/transparent"
+                android:textColor="@color/dialog_button_color"
+                android:layout_weight="1"
+                />
+        </LinearLayout>
     </LinearLayout>
 
 
