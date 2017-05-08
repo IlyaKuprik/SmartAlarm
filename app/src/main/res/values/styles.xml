@@ -23,10 +23,15 @@
     </style>
 
     <style name="MyEditText" parent="Theme.Design.Light.NoActionBar">
-        <item name="android:colorControlActivated">#1976d2</item>
-        <item name="colorControlActivated">#1976d2</item>
-
-
+        <item name="android:colorControlActivated">#9575cd</item>
+        <item name="colorControlActivated">#9575cd</item>
+    </style>
+    <style name="MyEditText2" parent="Theme.Design.Light.NoActionBar">
+        <item name="android:colorControlActivated">#5fa3d0</item>
+        <item name="colorControlActivated">#5fa3d0</item>
+    </style>
+    <style name="MyEditText3" parent="Theme.Design.Light.NoActionBar">
+        <item name="colorAccent">#FFF</item>
     </style>
 
     <style name="AppTheme" parent="AppTheme.Base" />

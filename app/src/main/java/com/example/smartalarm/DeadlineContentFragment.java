@@ -152,8 +152,7 @@ public class DeadlineContentFragment extends Fragment {
     public static class ViewHolder extends RecyclerView.ViewHolder{
         TextView date;
         TextView name;
-        TextView settingsDate;
-        TextView addTextView;
+        Button settingsDate;
 
         EditText settingsName;
 
@@ -219,9 +218,7 @@ public class DeadlineContentFragment extends Fragment {
 
             date = (TextView) itemView.findViewById(R.id.dateTextView);
             name = (TextView) itemView.findViewById(R.id.taskName);
-            settingsDate = (TextView) settingsDialog.findViewById(R.id.date);
-            addTextView = (TextView) settingsDialog.findViewById(R.id.addDeadlineTextView);
-
+            settingsDate = (Button) settingsDialog.findViewById(R.id.date);
             settingsName = (EditText) settingsDialog.findViewById(R.id.editName);
 
             settings = (Button) itemView.findViewById(R.id.settingsBtn);
@@ -265,8 +262,8 @@ public class DeadlineContentFragment extends Fragment {
                 holder.scrollAdapter.setScroll(deadlines.get(position).getScroll());
             }
             holder.name.setText(deadlines.get(position).getName());
+            holder.settingsName.setText(deadlines.get(position).getName());
             holder.date.setText(deadlines.get(position).getDate());
-            holder.settingsDate.setText(deadlines.get(position).getDate() + "/" + deadlines.get(position).getTime());
 
             if (holder.scrollAdapter.getScroll() != null){
                 deadlines.get(position).setScroll(holder.scrollAdapter.getScroll());
@@ -306,7 +303,6 @@ public class DeadlineContentFragment extends Fragment {
                     calendar.set(Calendar.MONTH, holder.dPicker.getMonth());
                     calendar.set(Calendar.DAY_OF_MONTH, holder.dPicker.getDayOfMonth());
                     holder.date.setText(formatter.format(calendar.getTimeInMillis()));
-                    holder.settingsDate.setText(formatter.format(calendar.getTimeInMillis()));
                     deadlines.get(position).setDate(formatter.format(calendar.getTimeInMillis()));
                     holder.datePicker.dismiss();
                     holder.timePicker.show();
@@ -320,7 +316,6 @@ public class DeadlineContentFragment extends Fragment {
                     calendar.set(Calendar.HOUR_OF_DAY, holder.tPicker.getCurrentHour());
                     calendar.set(Calendar.MINUTE, holder.tPicker.getCurrentMinute());
                     calendar.set(Calendar.SECOND, 0);
-                    holder.settingsDate.append("/" + formatter.format(calendar.getTimeInMillis()));
                     deadlines.get(position).setTime(formatter.format(calendar.getTimeInMillis()));
                     holder.timePicker.dismiss();
                 }
@@ -336,8 +331,6 @@ public class DeadlineContentFragment extends Fragment {
             };
 
             holder.addScrollElement.setOnClickListener(addScroll);
-            holder.addTextView.setOnClickListener(addScroll);
-
 
             holder.apply.setOnClickListener(new View.OnClickListener() {
                 @Override

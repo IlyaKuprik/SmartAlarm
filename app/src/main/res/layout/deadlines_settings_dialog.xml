@@ -1,46 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="#9575cd">
+    android:background="#9575cd"
+    android:layout_width="250dp">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:background="@color/alarm_background"
-        android:paddingTop="50dp">
+        android:paddingTop="5dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/date"
+                android:layout_gravity="end"
+                android:background="@drawable/calendar_icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+        </LinearLayout>
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:id="@+id/scrollView">
 
             <EditText
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/deadline_name"
                 android:textAlignment="center"
                 android:id="@+id/editName"
                 android:theme="@style/MyEditText"
                 android:textColor="@color/cardview_dark_background"
-                android:layout_weight="1"
                 android:textSize="25dp"
                 android:textColorHint="@color/cardview_dark_background"
-                android:ems="14" />
+                android:layout_width="match_parent" />
         </ScrollView>
 
-        <TextView
-            android:text="@string/date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/date"
-            android:textSize="25dp"
-            android:textColor="@color/cardview_dark_background"
-            android:textAlignment="viewStart" />
     </LinearLayout>
 
     <LinearLayout
@@ -57,22 +58,11 @@
             android:layout_width="50dp"
             android:layout_height="50dp" />
 
-        <TextView
-            android:text="@string/zero"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/addDeadlineTextView"
-            android:textSize="25dp"
-            android:textColor="@color/dialog_text_color"
-            android:layout_gravity=""
-            android:layout_weight="1" />
-
     </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -95,14 +85,12 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:layout_gravity="end">
 
             <Button

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/dialog_backgroung"
+    android:background="@color/alarm_background"
     android:orientation="vertical"
     android:paddingTop="40sp">
 
@@ -14,9 +14,10 @@
         android:id="@+id/settingsTime"
         android:textSize="50dp"
         android:textAlignment="center"
-        android:textColor="@color/dialog_text_color"
+        android:textColor="@color/cardview_dark_background"
         android:textAllCaps="false"
-        android:textIsSelectable="false" />
+        android:textIsSelectable="false"
+        android:layout_weight="1" />
 
     <EditText
         android:layout_width="match_parent"
@@ -26,52 +27,60 @@
         android:textAlignment="center"
         android:ems="10"
         android:textSize="24dp"
-        android:theme="@style/MyEditText" />
-
-    <CheckBox
-        android:text="@string/smart"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/dialog_text_color"
-        android:theme="@style/MyCheckBox"
-        android:id="@+id/smartBtn" />
-
-    <CheckBox
-        android:text="@string/every_day"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/MyCheckBox"
-        android:textColor="@color/dialog_text_color"
-        android:id="@+id/everyDay" />
+        android:theme="@style/MyEditText2"
+        android:layout_weight="1" />
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/dialog_backgroung">
+
+        <CheckBox
+            android:text="@string/smart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/dialog_text_color"
+            android:theme="@style/MyCheckBox"
+            android:id="@+id/smartBtn" />
+
+        <CheckBox
+            android:text="@string/every_day"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/MyCheckBox"
+            android:textColor="@color/dialog_text_color"
+            android:id="@+id/everyDay" />
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_gravity="end"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <Button
-                android:text="@string/delete"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/deleteAlarmBtn"
-                android:layout_weight="1"
-                android:textColor="@color/dialog_button_color"
-                android:background="@android:color/transparent" />
+                android:layout_gravity="end"
+                android:layout_height="match_parent">
 
-            <Button
-                android:text="@string/ok"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/applySettingsBtn"
-                android:layout_weight="1"
-                android:textColor="@color/dialog_button_color"
-                android:background="@android:color/transparent" />
+                <Button
+                    android:text="@string/delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/deleteAlarmBtn"
+                    android:layout_weight="1"
+                    android:textColor="@color/dialog_button_color"
+                    android:background="@android:color/transparent" />
+
+                <Button
+                    android:text="@string/ok"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/applySettingsBtn"
+                    android:layout_weight="1"
+                    android:textColor="@color/dialog_button_color"
+                    android:background="@android:color/transparent" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

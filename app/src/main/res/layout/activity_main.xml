@@ -50,7 +50,7 @@
         android:id="@+id/deadlineFab"
         android:visibility="gone"
         android:layout_gravity="bottom|center"
-        app:backgroundTint="#b2ff59"
+        app:backgroundTint="#e040fb"
         android:layout_margin="16dp"
         android:src="@drawable/plus_icon"/>
     <android.support.design.widget.FloatingActionButton
@@ -60,7 +60,7 @@
         android:id="@+id/settingsFab"
         android:layout_gravity="bottom|center"
         android:visibility="gone"
-        app:backgroundTint="#e040fb"
+        app:backgroundTint="#b2ff59"
         android:layout_margin="16dp"
         android:src="@drawable/plus_icon"/>
 
