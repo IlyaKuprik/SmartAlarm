@@ -36,7 +36,7 @@ public class AlarmContentFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //return inflater.inflate(R.layout.item_alarm,null);
+        //return inflater.inflate(R.time_repeat_dialog.item_alarm,null);
         RecyclerView recyclerView=(RecyclerView)inflater.inflate(R.layout.recycler_view,container,false);
         contentAdapter=new ContentAdapter();
         recyclerView.setAdapter(contentAdapter);
@@ -102,7 +102,7 @@ public class AlarmContentFragment extends Fragment {
         }
     }
 
-    public static class ContentAdapter extends RecyclerView.Adapter<ViewHolder>{
+    public static class ContentAdapter extends RecyclerView.Adapter<ViewHolder> {
 
         private static final String TAG = "AlarmContentFragment";
         protected static ArrayList<MyAlarmManager> alarms = new ArrayList<>();
@@ -266,6 +266,8 @@ public class AlarmContentFragment extends Fragment {
         public int getItemCount() {
             return alarms.size();
         }
+
+
     }
 
     @Override

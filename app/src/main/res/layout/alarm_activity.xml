@@ -16,4 +16,27 @@
         android:textColor="?android:attr/editTextColor"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="@string/zero"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="115dp"
+        android:id="@+id/alarmName"
+        android:textSize="40sp"
+        android:textColor="@color/alarm_background" />
+
+    <Button
+        android:text="@string/repeat_alarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/repeatBtn"
+        android:textAlignment="gravity"
+        android:textSize="20sp"
+        android:textColor="?android:attr/editTextColor"
+        android:layout_below="@+id/stopButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="19dp" />
 </RelativeLayout>

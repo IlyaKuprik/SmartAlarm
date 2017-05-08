@@ -10,7 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/alarm_background"
-        android:paddingTop="5dp">
+        android:paddingTop="10dp"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
 
         <LinearLayout
             android:orientation="vertical"

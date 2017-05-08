@@ -1,5 +1,6 @@
 package com.example.smartalarm;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -61,7 +62,8 @@ public class MainActivity extends AppCompatActivity{
         settingsFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Coming soon...", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(),SettingsActivity.class);
+                startActivity(intent);
             }
         });
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -141,6 +143,16 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (SettingsActivity.ringtone != null)
+         AlarmActivity.saveToFile(SettingsActivity.ringtone,getApplicationContext());
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 }
 

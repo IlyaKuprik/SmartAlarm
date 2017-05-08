@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.Vibrator;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import java.io.Serializable;
@@ -28,10 +29,10 @@ public class MyAlarmManager extends BroadcastReceiver implements Serializable {
     private int triggerMinute = -1;
     private int alarmId = -1;
 
-
-
     private static final String TAG="AlarmContentFragment";
     private static final String ONE_TIME="ONE_TIME";
+
+
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -40,12 +41,12 @@ public class MyAlarmManager extends BroadcastReceiver implements Serializable {
         wakeLock.acquire();
 
         Bundle extras = intent.getExtras();
-        if (extras!=null && extras.getBoolean(ONE_TIME,Boolean.FALSE)){
-            checked = false;
-            triggerHour = -1;
-            triggerMinute = -1;
+        if (extras!=null && extras.getBoolean(ONE_TIME)){
+            Log.wtf(TAG, String.valueOf(checked));
+            this.setChecked(false);
         }
         Intent intent1 = new Intent(context,AlarmActivity.class);
+        intent1.putExtra("name",intent.getStringExtra("name"));
         intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent1);
 
@@ -55,10 +56,19 @@ public class MyAlarmManager extends BroadcastReceiver implements Serializable {
         wakeLock.release();
     }
 
+    public void setAlarm(Context context, long intervalInMinutes){
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, MyAlarmManager.class);
+        PendingIntent pi = PendingIntent.getBroadcast(context, -2 , intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + intervalInMinutes * 60 * 1000, pi);
+
+    }
+
     public void setAlarm(Context context,int triggerHour,int triggerMinute) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, MyAlarmManager.class);
-        intent.putExtra(ONE_TIME,Boolean.TRUE);
+        intent.putExtra(ONE_TIME,true);
+        intent.putExtra("name",name);
         PendingIntent pi = PendingIntent.getBroadcast(context,alarmId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         Date time = new Date();
         this.triggerHour=triggerHour;
