@@ -9,12 +9,15 @@
     <color name="switch_color">#9cfa86</color>
     <color name="recycle_view_background">#001f58</color>
     <color name="red">#cc5a5e</color>
-    <color name="blue">#5a6bcc</color>
     <color name="green">#5acc5a</color>
     <color name="yellow">#ccca5a</color>
     <color name="empty">#00ffffff</color>
     <color name="dialog_backgroung">#5fa3d0</color>
     <color name="dialog_button_color">#dfc42e</color>
     <color name="dialog_text_color">#f0fcff</color>
+    <color name="pink">#a4ba68c8</color>
+    <color name="pink_primary">#AB47BC</color>
+    <color name="blue">#7d4fc3f7</color>
+    <color name="blue_primary">#29b6f6</color>
 
 </resources>

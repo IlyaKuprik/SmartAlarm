@@ -297,12 +297,16 @@ public class DeadlineContentFragment extends Fragment {
 
             switch (deadlines.get(position).getDeadlineColor()){
                 case 0 :
-                    holder.leftLayout.setBackgroundColor(Constants.BLUE_COLOR_PRIMARY);
-                    holder.rightLayout.setBackgroundColor(Constants.BLUE_COLOR);
+                    //holder.leftLayout.setBackgroundColor(Constants.BLUE_COLOR_PRIMARY);
+                    //holder.rightLayout.setBackgroundColor(Constants.BLUE_COLOR);
+                    holder.leftLayout.setBackgroundResource(R.color.blue_primary);
+                    holder.rightLayout.setBackgroundResource(R.color.blue);
                     break;
                 case 1 :
-                    holder.leftLayout.setBackgroundColor(Constants.PINK_COLOR_PRIMARY);
-                    holder.rightLayout.setBackgroundColor(Constants.PINK_COLOR);
+                    //holder.leftLayout.setBackgroundColor(Constants.PINK_COLOR_PRIMARY);
+                    //holder.rightLayout.setBackgroundColor(Constants.PINK_COLOR);
+                    holder.leftLayout.setBackgroundResource(R.color.pink_primary);
+                    holder.rightLayout.setBackgroundResource(R.color.pink);
                     break;
             }
 
@@ -317,8 +321,8 @@ public class DeadlineContentFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     deadlines.get(position).setDeadlineColor(0);
-                    holder.leftLayout.setBackgroundColor(Constants.BLUE_COLOR_PRIMARY);
-                    holder.rightLayout.setBackgroundColor(Constants.BLUE_COLOR);
+                    holder.leftLayout.setBackgroundResource(R.color.blue_primary);
+                    holder.rightLayout.setBackgroundResource(R.color.blue);
                     holder.colorPicker.dismiss();
                 }
             });
@@ -327,8 +331,8 @@ public class DeadlineContentFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     deadlines.get(position).setDeadlineColor(1);
-                    holder.leftLayout.setBackgroundColor(Constants.PINK_COLOR_PRIMARY);
-                    holder.rightLayout.setBackgroundColor(Constants.PINK_COLOR);
+                    holder.leftLayout.setBackgroundResource(R.color.pink_primary);
+                    holder.rightLayout.setBackgroundResource(R.color.pink);
                     holder.colorPicker.dismiss();
                 }
             });
