@@ -27,12 +27,12 @@ public class AlarmActivity extends AppCompatActivity {
     private static final String REPEAT_MINUTE = "mMinute";
     private static final String PREFERENCES = "mPreferences";
 
-    SharedPreferences settings;
+    static SharedPreferences settings;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        settings = PreferenceManager.getDefaultSharedPreferences(this);
+        settings = getSharedPreferences(PREFERENCES,MODE_PRIVATE);
         setContentView(R.layout.alarm_activity);
         button = (Button) findViewById(R.id.stopButton);
         repeatButton = (Button) findViewById(R.id.repeatBtn);
@@ -77,15 +77,15 @@ public class AlarmActivity extends AppCompatActivity {
         });
     }
 
-    public void saveRingtone(Uri uri) {
+    public static void saveRingtone(Uri uri) {
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(RINGTONE,uri.toString());
         editor.apply();
     }
-    public void saveRepeatMinute(int repeatMinute) {
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putInt(REPEAT_MINUTE, repeatMinute);
-        editor.apply();
+    public static void saveRepeatMinute(int repeatMinute) {
+//        SharedPreferences.Editor editor = settings.edit();
+  //      editor.putInt(REPEAT_MINUTE, repeatMinute);
+    //    editor.apply();
     }
 }
 

@@ -52,7 +52,7 @@ public class SettingsActivity extends AppCompatActivity {
                         Button cancel = (Button)dialog.findViewById(R.id.cancel);
                         Button apply = (Button)dialog.findViewById(R.id.apply);
                         final EditText editText = (EditText)dialog.findViewById(R.id.editText2);
-                        editText.setText(String.valueOf(AlarmActivity.repeatMinute));
+                        editText.setText(String.valueOf(getSharedPreferences("mPreferences", MODE_PRIVATE).getInt("mMinute",0)));
                         dialog.show();
                         cancel.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -63,8 +63,8 @@ public class SettingsActivity extends AppCompatActivity {
                         apply.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                AlarmActivity aa = new AlarmActivity();
-                                aa.saveRepeatMinute(Integer.parseInt(String.valueOf(editText.getText())));
+                                AlarmActivity.saveRepeatMinute(Integer.parseInt(String.valueOf(editText.getText())));
+                                getSharedPreferences("mPreferences", MODE_PRIVATE).edit().putInt("mMinute", Integer.parseInt(String.valueOf(editText.getText()))).commit();
                                 dialog.dismiss();
                             }
                         });
@@ -83,8 +83,7 @@ public class SettingsActivity extends AppCompatActivity {
             Log.wtf("MUSIC","okx2");
             if (ringtone != null){
                 Log.wtf("MUSIC","okx3");
-                AlarmActivity aa = new AlarmActivity();
-                aa.saveRingtone(ringtone);
+                getSharedPreferences("mPreferences", MODE_PRIVATE).edit().putString("mRingtone", ringtone.toString()).commit();
             }
         }
 

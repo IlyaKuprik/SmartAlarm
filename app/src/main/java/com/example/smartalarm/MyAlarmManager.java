@@ -5,9 +5,11 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.Vibrator;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -32,6 +34,8 @@ public class MyAlarmManager extends BroadcastReceiver implements Serializable {
     private static final String TAG="AlarmContentFragment";
     private static final String ONE_TIME="ONE_TIME";
 
+    public MyAlarmManager() {
+    }
 
 
     @Override
