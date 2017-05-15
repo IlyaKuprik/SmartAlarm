@@ -21,4 +21,5 @@
     <string name="add_deadline">Добавить задачу</string>
     <string name="add_scroll_element">Добавить элемент</string>
     <string name="repeat_alarm">отложить</string>
+    <string name="choose_color">Выберите цвет</string>
 </resources>

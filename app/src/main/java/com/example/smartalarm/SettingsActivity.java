@@ -63,7 +63,8 @@ public class SettingsActivity extends AppCompatActivity {
                         apply.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                AlarmActivity.repeatMinute = Integer.parseInt(editText.getText().toString());
+                                AlarmActivity aa = new AlarmActivity();
+                                aa.saveRepeatMinute(Integer.parseInt(String.valueOf(editText.getText())));
                                 dialog.dismiss();
                             }
                         });
@@ -82,8 +83,8 @@ public class SettingsActivity extends AppCompatActivity {
             Log.wtf("MUSIC","okx2");
             if (ringtone != null){
                 Log.wtf("MUSIC","okx3");
-                AlarmActivity.ringtone = ringtone;
-                AlarmActivity.saveToFile(ringtone,SettingsActivity.this);
+                AlarmActivity aa = new AlarmActivity();
+                aa.saveRingtone(ringtone);
             }
         }
 

@@ -16,6 +16,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -162,10 +163,16 @@ public class DeadlineContentFragment extends Fragment {
         Button dateApplyBtn;
         Button timeApplyBtn;
         Button addScrollElement;
+        Button blue;
+        Button pink;
+        Button green;
+        Button red;
+        Button chooseColor;
 
         Dialog settingsDialog;
         Dialog datePicker;
         Dialog timePicker;
+        Dialog colorPicker;
 
         DatePicker dPicker;
         TimePicker tPicker;
@@ -175,6 +182,9 @@ public class DeadlineContentFragment extends Fragment {
         MiniContentAdapter scrollAdapter;
 
         ArrayList<ScrollElement> scroll;
+
+        LinearLayout rightLayout;
+        LinearLayout leftLayout;
 
         ScrollView scrollView;
 
@@ -211,6 +221,10 @@ public class DeadlineContentFragment extends Fragment {
             timePicker.requestWindowFeature(Window.FEATURE_NO_TITLE);
             timePicker.setContentView(R.layout.time_picker);
 
+            colorPicker = new Dialog(context);
+            colorPicker.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            colorPicker.setContentView(R.layout.color_picker_dialog);
+
             dPicker = (DatePicker)datePicker.findViewById(R.id.datePicker);
 
             tPicker = (TimePicker)timePicker.findViewById(R.id.timePicker);
@@ -227,6 +241,14 @@ public class DeadlineContentFragment extends Fragment {
             dateApplyBtn = (Button) datePicker.findViewById(R.id.datePickerBtn);
             timeApplyBtn = (Button) timePicker.findViewById(R.id.applyTimeButton);
             addScrollElement = (Button) settingsDialog.findViewById(R.id.addScroll);
+            blue = (Button)colorPicker.findViewById(R.id.blue);
+            pink = (Button)colorPicker.findViewById(R.id.pink);
+            green = (Button)colorPicker.findViewById(R.id.green);
+            red = (Button)colorPicker.findViewById(R.id.red);
+            chooseColor = (Button)settingsDialog.findViewById(R.id.chooseColor);
+
+            rightLayout = (LinearLayout)itemView.findViewById(R.id.rightLayout);
+            leftLayout = (LinearLayout)itemView.findViewById(R.id.leftLayout);
 
             recyclerView=(RecyclerView) settingsDialog.findViewById(R.id.taskList);
             scrollAdapter = new MiniContentAdapter();
@@ -272,6 +294,44 @@ public class DeadlineContentFragment extends Fragment {
             if (deadlines.get(position).getDeadlineId() == -1){
                 deadlines.get(position).setDeadlineId(position);
             }
+
+            switch (deadlines.get(position).getDeadlineColor()){
+                case 0 :
+                    holder.leftLayout.setBackgroundColor(Constants.BLUE_COLOR_PRIMARY);
+                    holder.rightLayout.setBackgroundColor(Constants.BLUE_COLOR);
+                    break;
+                case 1 :
+                    holder.leftLayout.setBackgroundColor(Constants.PINK_COLOR_PRIMARY);
+                    holder.rightLayout.setBackgroundColor(Constants.PINK_COLOR);
+                    break;
+            }
+
+            holder.chooseColor.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    holder.colorPicker.show();
+                }
+            });
+
+            holder.blue.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    deadlines.get(position).setDeadlineColor(0);
+                    holder.leftLayout.setBackgroundColor(Constants.BLUE_COLOR_PRIMARY);
+                    holder.rightLayout.setBackgroundColor(Constants.BLUE_COLOR);
+                    holder.colorPicker.dismiss();
+                }
+            });
+
+            holder.pink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    deadlines.get(position).setDeadlineColor(1);
+                    holder.leftLayout.setBackgroundColor(Constants.PINK_COLOR_PRIMARY);
+                    holder.rightLayout.setBackgroundColor(Constants.PINK_COLOR);
+                    holder.colorPicker.dismiss();
+                }
+            });
 
             holder.settings.setOnClickListener(new View.OnClickListener() {
                 @Override

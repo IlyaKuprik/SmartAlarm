@@ -33,6 +33,8 @@ public class MyDeadlineManager extends BroadcastReceiver implements Serializable
 
     private ArrayList<ScrollElement> scroll;
 
+    private int deadlineColor = 0;
+
     @Override
     public void onReceive(Context context, Intent intent) {
         PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
@@ -135,5 +137,13 @@ public class MyDeadlineManager extends BroadcastReceiver implements Serializable
 
     public void setScroll(ArrayList<ScrollElement> scroll) {
         this.scroll = scroll;
+    }
+
+    public int getDeadlineColor() {
+        return deadlineColor;
+    }
+
+    public void setDeadlineColor(int deadlineColor) {
+        this.deadlineColor = deadlineColor;
     }
 }

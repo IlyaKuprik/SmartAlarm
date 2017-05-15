@@ -19,12 +19,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/date"
-                android:layout_gravity="end"
-                android:background="@drawable/calendar_icon"
-                android:layout_width="40dp"
-                android:layout_height="40dp" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="right">
+
+                <Button
+                    android:id="@+id/date"
+                    android:layout_gravity="end"
+                    android:background="@drawable/calendar_icon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/chooseColor"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="end"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
         </LinearLayout>
 
         <ScrollView
@@ -50,6 +66,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="end"
         android:layout_weight="1">
 
         <Button

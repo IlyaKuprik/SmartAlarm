@@ -144,13 +144,6 @@ public class MainActivity extends AppCompatActivity{
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        if (SettingsActivity.ringtone != null)
-         AlarmActivity.saveToFile(SettingsActivity.ringtone,getApplicationContext());
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
     }
