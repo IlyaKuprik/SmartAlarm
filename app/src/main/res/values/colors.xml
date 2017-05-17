@@ -8,9 +8,6 @@
     <color name="alarm_background">#ffffff</color>
     <color name="switch_color">#9cfa86</color>
     <color name="recycle_view_background">#001f58</color>
-    <color name="red">#cc5a5e</color>
-    <color name="green">#5acc5a</color>
-    <color name="yellow">#ccca5a</color>
     <color name="empty">#00ffffff</color>
     <color name="dialog_backgroung">#5fa3d0</color>
     <color name="dialog_button_color">#dfc42e</color>
@@ -19,5 +16,10 @@
     <color name="pink_primary">#AB47BC</color>
     <color name="blue">#7d4fc3f7</color>
     <color name="blue_primary">#29b6f6</color>
+    <color name="green">#b28bc34a</color>
+    <color name="green_primary">#4CAF50</color>
+    <color name="red">#a0ff5252</color>
+    <color name="red_primary">#D32F2F</color>
+
 
 </resources>

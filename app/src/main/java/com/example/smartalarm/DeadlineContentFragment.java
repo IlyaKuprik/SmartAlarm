@@ -308,6 +308,18 @@ public class DeadlineContentFragment extends Fragment {
                     holder.leftLayout.setBackgroundResource(R.color.pink_primary);
                     holder.rightLayout.setBackgroundResource(R.color.pink);
                     break;
+                case 2 :
+                    //holder.leftLayout.setBackgroundColor(Constants.PINK_COLOR_PRIMARY);
+                    //holder.rightLayout.setBackgroundColor(Constants.PINK_COLOR);
+                    holder.leftLayout.setBackgroundResource(R.color.green_primary);
+                    holder.rightLayout.setBackgroundResource(R.color.green);
+                    break;
+                case 3 :
+                    //holder.leftLayout.setBackgroundColor(Constants.PINK_COLOR_PRIMARY);
+                    //holder.rightLayout.setBackgroundColor(Constants.PINK_COLOR);
+                    holder.leftLayout.setBackgroundResource(R.color.red_primary);
+                    holder.rightLayout.setBackgroundResource(R.color.red);
+                    break;
             }
 
             holder.chooseColor.setOnClickListener(new View.OnClickListener() {
@@ -333,6 +345,26 @@ public class DeadlineContentFragment extends Fragment {
                     deadlines.get(position).setDeadlineColor(1);
                     holder.leftLayout.setBackgroundResource(R.color.pink_primary);
                     holder.rightLayout.setBackgroundResource(R.color.pink);
+                    holder.colorPicker.dismiss();
+                }
+            });
+
+            holder.green.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    deadlines.get(position).setDeadlineColor(2);
+                    holder.leftLayout.setBackgroundResource(R.color.green_primary);
+                    holder.rightLayout.setBackgroundResource(R.color.green);
+                    holder.colorPicker.dismiss();
+                }
+            });
+
+            holder.red.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    deadlines.get(position).setDeadlineColor(3);
+                    holder.leftLayout.setBackgroundResource(R.color.red_primary);
+                    holder.rightLayout.setBackgroundResource(R.color.red);
                     holder.colorPicker.dismiss();
                 }
             });
