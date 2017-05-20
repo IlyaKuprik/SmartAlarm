@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -77,6 +78,7 @@ public class DeadlineContentFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(final MiniViewHolder holder, final int position) {
+            holder.editNameOfTask.requestFocus();
             if (scroll.get(position).getId() == -1) {
                 holder.add.setVisibility(View.VISIBLE);
                 holder.delete.setVisibility(View.GONE);
@@ -188,22 +190,7 @@ public class DeadlineContentFragment extends Fragment {
 
         ScrollView scrollView;
 
-        private static class OnViewGlobalLayoutListener implements ViewTreeObserver.OnGlobalLayoutListener{
-            private int MAX_LENGTH;
-            private View view;
 
-            public OnViewGlobalLayoutListener(View view,int length){
-                this.view = view;
-                MAX_LENGTH = length;
-            }
-
-
-            @Override
-            public void onGlobalLayout() {
-                if (view.getHeight() > MAX_LENGTH)
-                    view.getLayoutParams().height = MAX_LENGTH;
-            }
-        }
 
         public ViewHolder(View view) {
             super(view);
@@ -255,13 +242,12 @@ public class DeadlineContentFragment extends Fragment {
             recyclerView.setAdapter(scrollAdapter);
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.getViewTreeObserver()
-                   .addOnGlobalLayoutListener(new OnViewGlobalLayoutListener(recyclerView,400));
+
 
             scroll = new ArrayList<>();
 
             scrollView = (ScrollView)settingsDialog.findViewById(R.id.scrollView);
-            scrollView.getViewTreeObserver().addOnGlobalLayoutListener(new OnViewGlobalLayoutListener(scrollView,200));
+
         }
     }
 
@@ -277,7 +263,25 @@ public class DeadlineContentFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(final DeadlineContentFragment.ViewHolder holder, final int position) {
+            class OnViewGlobalLayoutListener implements ViewTreeObserver.OnGlobalLayoutListener{
+                private int MAX_LENGTH;
+                private View view;
 
+                public OnViewGlobalLayoutListener(View view,int length){
+                    this.view = view;
+                    MAX_LENGTH = length;
+                }
+
+
+                @Override
+                public void onGlobalLayout() {
+                    if (view.getHeight() > MAX_LENGTH)
+                        view.getLayoutParams().height = MAX_LENGTH;
+                }
+            }
+            holder.recyclerView.getViewTreeObserver()
+                    .addOnGlobalLayoutListener(new OnViewGlobalLayoutListener(holder.recyclerView,400));
+            holder.scrollView.getViewTreeObserver().addOnGlobalLayoutListener(new OnViewGlobalLayoutListener(holder.scrollView,200));
             final Calendar calendar = Calendar.getInstance();
             final Context context = view.getContext();
             if (deadlines.get(position).getScroll()!= null) {

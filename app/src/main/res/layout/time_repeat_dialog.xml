@@ -5,37 +5,37 @@
     android:orientation="vertical">
 
     <EditText
+        android:id="@+id/editText2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:ems="10"
         android:inputType="number"
         android:text="Name"
-        android:ems="10"
-        android:textAlignment="center"
-        android:id="@+id/editText2"
-        android:theme="@style/MyEditText2"
-        android:layout_marginBottom="15dp" />
+        android:textAlignment="center" />
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:orientation="horizontal">
 
         <Button
-            android:text="@string/cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
             android:id="@+id/cancel"
-            android:layout_weight="1"
-            android:textColor="#5fa3d0" />
-
-        <Button
-            android:text="@string/ok"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:id="@+id/apply"
             android:layout_weight="1"
-            android:textColor="#5fa3d0" />
+            android:background="@android:color/transparent"
+            android:text="@string/cancel"
+            android:textColor="#69f0ae" />
+
+        <Button
+            android:id="@+id/apply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:text="@string/ok"
+            android:textColor="#69f0ae" />
     </LinearLayout>
 </LinearLayout>

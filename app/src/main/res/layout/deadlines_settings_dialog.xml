@@ -38,7 +38,8 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_gravity="end"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:background="@drawable/palette" />
             </LinearLayout>
 
         </LinearLayout>
@@ -49,15 +50,15 @@
             android:id="@+id/scrollView">
 
             <EditText
-                android:layout_height="wrap_content"
-                android:hint="@string/deadline_name"
-                android:textAlignment="center"
                 android:id="@+id/editName"
-                android:theme="@style/MyEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:textAlignment="center"
                 android:textColor="@color/cardview_dark_background"
-                android:textSize="25dp"
                 android:textColorHint="@color/cardview_dark_background"
-                android:layout_width="match_parent" />
+                android:textSize="25dp"
+                android:theme="@style/MyEditText" />
         </ScrollView>
 
     </LinearLayout>

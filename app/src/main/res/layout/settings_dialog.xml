@@ -20,15 +20,16 @@
         android:layout_weight="1" />
 
     <EditText
+        android:id="@+id/editAlarmName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editAlarmName"
+        android:layout_marginBottom="5dp"
+        android:layout_weight="1"
+        android:ems="10"
         android:hint="@string/alarm_name"
         android:textAlignment="center"
-        android:ems="10"
         android:textSize="24dp"
-        android:theme="@style/MyEditText2"
-        android:layout_weight="1" />
+        android:theme="@style/MyEditText2" />
 
     <LinearLayout
         android:orientation="vertical"

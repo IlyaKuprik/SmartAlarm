@@ -123,7 +123,7 @@ public class AlarmContentFragment extends Fragment {
                 holder.settingsDialog.show();
             }
 
-            if (alarms.get(position).getTriggerHour() == -1 ||  alarms.get(position).getTriggerHour() > 19 || alarms.get(position).getTriggerHour() < 7) {
+            if (alarms.get(position).getTriggerHour() > 19 || alarms.get(position).getTriggerHour() < 5) {
                 holder.alarmLayout.setBackgroundResource(R.drawable.alarm_dark_background);
             }
             else {

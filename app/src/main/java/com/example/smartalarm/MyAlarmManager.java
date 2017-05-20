@@ -15,8 +15,11 @@ import android.view.View;
 import android.widget.Toast;
 
 import java.io.Serializable;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
-
+import java.util.Formatter;
 
 
 public class MyAlarmManager extends BroadcastReceiver implements Serializable {
@@ -35,6 +38,9 @@ public class MyAlarmManager extends BroadcastReceiver implements Serializable {
     private static final String ONE_TIME="ONE_TIME";
 
     public MyAlarmManager() {
+        Date date = new Date();
+        Format formatter = new SimpleDateFormat("HH:mm");
+        time = formatter.format(date);
     }
 
 
@@ -151,7 +157,6 @@ public class MyAlarmManager extends BroadcastReceiver implements Serializable {
         if (interval < 0) interval += 24 * 3600;
         Log.wtf(TAG, "Ежедневный будильник сработает через " + String.valueOf(interval) + " секунд");
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + interval * 1000, AlarmManager.INTERVAL_DAY , pi);
-
         Toast.makeText(context, "Ежедневный будильник сработает через: " + interval / 3600 + " ч " + (interval / 60) % 60 + " м", Toast.LENGTH_LONG).show();
         Log.wtf(TAG,"Добавлен ежедневный будильник под номером " + String.valueOf(alarmId));
         checked = true;

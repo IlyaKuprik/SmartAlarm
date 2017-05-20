@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.PowerManager;
 import android.os.Vibrator;
 import android.util.Log;
@@ -46,9 +47,10 @@ public class MyDeadlineManager extends BroadcastReceiver implements Serializable
         PendingIntent pi =PendingIntent.getActivity(context, deadlineId, nIntent, PendingIntent.FLAG_ONE_SHOT);
         Notification.Builder builder = new Notification.Builder(context);
         builder.setContentIntent(pi)
-                .setSmallIcon(R.drawable.small_notification_icon)
+                .setSmallIcon(R.drawable.deadlines_icon)
                 .setContentTitle("Напоминание")
-                .setContentText(intent.getStringExtra(String.valueOf(notificationName)));
+                .setContentText(intent.getStringExtra(String.valueOf(notificationName)))
+                .setColor(Color.WHITE);
         Notification notification = builder.build();
         name.delete(0,name.length());
         notification.defaults = Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND;

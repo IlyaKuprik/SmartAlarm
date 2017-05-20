@@ -19,7 +19,7 @@
 
     <style name="MyCheckBox" parent="Theme.Design.Light.NoActionBar">
         <item name="android:colorControlActivated">@color/dialog_text_color</item>
-        <item name="android:colorControlNormal">@color/cardview_dark_background</item>
+        <item name="android:colorControlNormal">@color/dialog_text_color</item>
     </style>
 
     <style name="MyEditText" parent="Theme.Design.Light.NoActionBar">

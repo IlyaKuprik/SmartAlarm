@@ -13,16 +13,13 @@
         android:layout_height="50dp" />
 
     <EditText
-        android:layout_height="wrap_content"
-        android:text="@style/MyEditText3"
         android:id="@+id/editText"
         android:layout_width="wrap_content"
-        android:textColor="#FFF"
-        android:textColorLink="#FFF"
-        android:textColorHighlight="#FFF"
-        android:shadowColor="#FFF"
-        android:textColorHint="#FFF"
-        android:layout_weight="30"/>
+        android:layout_height="wrap_content"
+        android:layout_weight="30"
+        android:theme="@style/MyEditText3"
+        android:focusableInTouchMode="true"
+        android:textColor="@color/alarm_background"/>
 
     <Button
         android:id="@+id/add"
