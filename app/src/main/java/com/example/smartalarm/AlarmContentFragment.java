@@ -2,10 +2,12 @@ package com.example.smartalarm;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +18,9 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -36,7 +38,6 @@ public class AlarmContentFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //return inflater.inflate(R.time_repeat_dialog.item_alarm,null);
         RecyclerView recyclerView=(RecyclerView)inflater.inflate(R.layout.recycler_view,container,false);
         contentAdapter=new ContentAdapter();
         recyclerView.setAdapter(contentAdapter);
@@ -59,7 +60,7 @@ public class AlarmContentFragment extends Fragment {
 
         CheckBox smartBtn;
         CheckBox everyDayBtn;
-        Switch switchBtn;
+        SwitchCompat switchBtn;
 
         TimePicker timePicker;
 
@@ -91,7 +92,7 @@ public class AlarmContentFragment extends Fragment {
 
             smartBtn = (CheckBox)settingsDialog.findViewById(R.id.smartBtn);
             everyDayBtn = (CheckBox)settingsDialog.findViewById(R.id.everyDay);
-            switchBtn = (Switch)itemView.findViewById(R.id.alarmSwitch);
+            switchBtn = (SwitchCompat) itemView.findViewById(R.id.alarmSwitch);
 
             timeButton = (Button)timeDialog.findViewById(R.id.applyTimeButton);
             settingsBtn = (Button)itemView.findViewById(R.id.alarmSettingsBtn);
@@ -105,6 +106,7 @@ public class AlarmContentFragment extends Fragment {
     public static class ContentAdapter extends RecyclerView.Adapter<ViewHolder> {
 
         private static final String TAG = "AlarmContentFragment";
+
         protected static ArrayList<MyAlarmManager> alarms = new ArrayList<>();
 
         View view;
@@ -220,7 +222,14 @@ public class AlarmContentFragment extends Fragment {
                     holder.timeDialog.show();
                 }
             });
-
+            holder.settingsDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    if (alarms.get(position).getTriggerHour() == -1)
+                        alarms.remove(position);
+                    notifyDataSetChanged();
+                }
+            });
             holder.switchBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -232,7 +241,10 @@ public class AlarmContentFragment extends Fragment {
                         } else if (isChecked && holder.everyDayBtn.isChecked()) {
                             alarms.get(position).setRepareAlarm(view.getContext(), alarms.get(position).getTriggerHour(), alarms.get(position).getTriggerMinute());
                         } else alarms.get(position).cancelAlarm(view.getContext());
-
+                    }
+                    else if (alarms.get(position).getTriggerHour() == -1 && alarms.get(position).getTriggerMinute() == -1 && isChecked) {
+                        holder.switchBtn.setChecked(false);
+                        Toast.makeText(view.getContext(), "Пожалуйста, выберите время срабатывания", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -243,6 +255,11 @@ public class AlarmContentFragment extends Fragment {
                     if (holder.alarmEditText!=null) {
                         holder.name.setText(String.valueOf(holder.alarmEditText.getText()));
                         alarms.get(position).setName(String.valueOf(holder.alarmEditText.getText()));
+                    }
+                    if (alarms.get(position).getTriggerHour() == -1) {
+                        //Toast.makeText(view.getContext(), String.valueOf(alarms.get(position).getTriggerHour()) , Toast.LENGTH_SHORT).show();
+                        alarms.remove(alarms.get(position));
+                        notifyDataSetChanged();
                     }
                     holder.settingsDialog.dismiss();
                 }
@@ -259,15 +276,12 @@ public class AlarmContentFragment extends Fragment {
                     holder.settingsDialog.dismiss();
                 }
             });
-
         }
 
         @Override
         public int getItemCount() {
             return alarms.size();
         }
-
-
     }
 
     @Override

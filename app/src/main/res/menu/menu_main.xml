@@ -8,5 +8,10 @@
     android:orderInCategory="100"
     android:title="настройки"
     app:showAsAction="never" />
+    <item
+    android:id="@+id/manual"
+    android:orderInCategory="100"
+    android:title="руководство"
+    app:showAsAction="never" />
 </group>
     </menu>

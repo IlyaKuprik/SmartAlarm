@@ -29,7 +29,7 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
-        String[] arr = new String[]{"Музыка будильника","Время повтора"};
+        String[] arr = new String[]{"Музыка будильника","Время повторного срабатывания будильника","Время предупреждения о событиях"};
         arrAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,arr);
         listView = (ListView)findViewById(R.id.list);
         listView.setAdapter(arrAdapter);
@@ -49,9 +49,12 @@ public class SettingsActivity extends AppCompatActivity {
                     case 1:
                         final Dialog dialog = new Dialog(SettingsActivity.this);
                         dialog.setContentView(R.layout.time_repeat_dialog);
+                        dialog.setTitle("Выберите время");
                         Button cancel = (Button)dialog.findViewById(R.id.cancel);
                         Button apply = (Button)dialog.findViewById(R.id.apply);
+
                         final EditText editText = (EditText)dialog.findViewById(R.id.editText2);
+                        editText.setHint("время в минутах");
                         editText.setText(String.valueOf(getSharedPreferences("mPreferences", MODE_PRIVATE).getInt("mMinute",0)));
                         dialog.show();
                         cancel.setOnClickListener(new View.OnClickListener() {
@@ -63,12 +66,34 @@ public class SettingsActivity extends AppCompatActivity {
                         apply.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                AlarmActivity.saveRepeatMinute(Integer.parseInt(String.valueOf(editText.getText())));
-                                getSharedPreferences("mPreferences", MODE_PRIVATE).edit().putInt("mMinute", Integer.parseInt(String.valueOf(editText.getText()))).commit();
+                                getSharedPreferences("mPreferences", MODE_PRIVATE).edit().putInt("mMinute", Integer.parseInt(String.valueOf(editText.getText()))).apply();
                                 dialog.dismiss();
                             }
                         });
                         break;
+                    case 2:
+                        final Dialog sDialog = new Dialog(SettingsActivity.this);
+                        sDialog.setContentView(R.layout.time_repeat_dialog);
+                        sDialog.setTitle("Выберите время");
+                        Button sCancel = (Button)sDialog.findViewById(R.id.cancel);
+                        Button sApply = (Button)sDialog.findViewById(R.id.apply);
+                        final EditText sEditText = (EditText)sDialog.findViewById(R.id.editText2);
+                        sEditText.setHint("время в часах");
+                        sEditText.setText(String.valueOf(getSharedPreferences("mTimeSaves", MODE_PRIVATE).getInt("savedTime",0)));
+                        sDialog.show();
+                        sCancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                sDialog.dismiss();
+                            }
+                        });
+                        sApply.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                getSharedPreferences("mTimeSaves", MODE_PRIVATE).edit().putInt("savedTime", Integer.parseInt(String.valueOf(sEditText.getText()))).apply();
+                                sDialog.dismiss();
+                            }
+                        });
                 }
             }
         });
@@ -83,7 +108,7 @@ public class SettingsActivity extends AppCompatActivity {
             Log.wtf("MUSIC","okx2");
             if (ringtone != null){
                 Log.wtf("MUSIC","okx3");
-                getSharedPreferences("mPreferences", MODE_PRIVATE).edit().putString("mRingtone", ringtone.toString()).commit();
+                getSharedPreferences("mPreferences", MODE_PRIVATE).edit().putString("mRingtone", ringtone.toString()).apply();
             }
         }
 

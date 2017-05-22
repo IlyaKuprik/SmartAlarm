@@ -33,6 +33,10 @@
     <style name="MyEditText3" parent="Theme.Design.Light.NoActionBar">
         <item name="colorAccent">#FFF</item>
     </style>
+    <style name="MyEditText4" parent="Theme.Design.Light.NoActionBar">
+        <item name="android:colorControlActivated">#039d91</item>
+        <item name="colorControlActivated">#039d91</item>
+    </style>
 
     <style name="AppTheme" parent="AppTheme.Base" />
 </resources>

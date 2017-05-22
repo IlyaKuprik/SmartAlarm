@@ -20,6 +20,7 @@
     <color name="green_primary">#4CAF50</color>
     <color name="red">#a0ff5252</color>
     <color name="red_primary">#D32F2F</color>
+    <color name="dark_blue">#a01565c0</color>
 
 
 </resources>

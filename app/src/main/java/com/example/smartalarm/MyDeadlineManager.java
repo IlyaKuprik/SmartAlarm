@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.PowerManager;
 import android.os.Vibrator;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import java.io.Serializable;
@@ -36,6 +37,8 @@ public class MyDeadlineManager extends BroadcastReceiver implements Serializable
 
     private int deadlineColor = 0;
 
+    private static long NOTIFICATION_TIME;
+
     @Override
     public void onReceive(Context context, Intent intent) {
         PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
@@ -45,7 +48,7 @@ public class MyDeadlineManager extends BroadcastReceiver implements Serializable
 
         Intent nIntent = new Intent(context, MainActivity.class);
         PendingIntent pi =PendingIntent.getActivity(context, deadlineId, nIntent, PendingIntent.FLAG_ONE_SHOT);
-        Notification.Builder builder = new Notification.Builder(context);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         builder.setContentIntent(pi)
                 .setSmallIcon(R.drawable.deadlines_icon)
                 .setContentTitle("Напоминание")
@@ -57,20 +60,19 @@ public class MyDeadlineManager extends BroadcastReceiver implements Serializable
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(deadlineId, builder.build());
         Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-        v.vibrate(1000);
+        v.vibrate(2000);
         working = false;
 
         wakeLock.release();
     }
 
     public void setDeadline(Context context, long millis, String notificationName){
+        NOTIFICATION_TIME = context.getSharedPreferences("mTimeSaves", Context.MODE_PRIVATE).getInt("savedTime",0) * 3600 * 1000;
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, MyDeadlineManager.class);
         intent.putExtra(this.notificationName.toString() , notificationName);
         PendingIntent pi = PendingIntent.getBroadcast(context, deadlineId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, millis, pi);
-        Log.e(TAG,String.valueOf((millis - System.currentTimeMillis()) / 1000));
-        Log.e(TAG,name.toString());
+        alarmManager.set(AlarmManager.RTC_WAKEUP, millis - NOTIFICATION_TIME, pi);
         working = true;
     }
 

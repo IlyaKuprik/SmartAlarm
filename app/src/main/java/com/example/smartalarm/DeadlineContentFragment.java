@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.Window;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -301,26 +300,18 @@ public class DeadlineContentFragment extends Fragment {
 
             switch (deadlines.get(position).getDeadlineColor()){
                 case 0 :
-                    //holder.leftLayout.setBackgroundColor(Constants.BLUE_COLOR_PRIMARY);
-                    //holder.rightLayout.setBackgroundColor(Constants.BLUE_COLOR);
                     holder.leftLayout.setBackgroundResource(R.color.blue_primary);
                     holder.rightLayout.setBackgroundResource(R.color.blue);
                     break;
                 case 1 :
-                    //holder.leftLayout.setBackgroundColor(Constants.PINK_COLOR_PRIMARY);
-                    //holder.rightLayout.setBackgroundColor(Constants.PINK_COLOR);
                     holder.leftLayout.setBackgroundResource(R.color.pink_primary);
                     holder.rightLayout.setBackgroundResource(R.color.pink);
                     break;
                 case 2 :
-                    //holder.leftLayout.setBackgroundColor(Constants.PINK_COLOR_PRIMARY);
-                    //holder.rightLayout.setBackgroundColor(Constants.PINK_COLOR);
                     holder.leftLayout.setBackgroundResource(R.color.green_primary);
                     holder.rightLayout.setBackgroundResource(R.color.green);
                     break;
                 case 3 :
-                    //holder.leftLayout.setBackgroundColor(Constants.PINK_COLOR_PRIMARY);
-                    //holder.rightLayout.setBackgroundColor(Constants.PINK_COLOR);
                     holder.leftLayout.setBackgroundResource(R.color.red_primary);
                     holder.rightLayout.setBackgroundResource(R.color.red);
                     break;

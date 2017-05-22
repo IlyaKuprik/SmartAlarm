@@ -8,16 +8,20 @@
         android:id="@+id/editText2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="number"
         android:text="Name"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:theme="@style/MyEditText4" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
+        android:layout_gravity="center"
         android:orientation="horizontal">
 
         <Button
@@ -27,7 +31,7 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:text="@string/cancel"
-            android:textColor="#69f0ae" />
+            android:textColor="#039d91" />
 
         <Button
             android:id="@+id/apply"
@@ -36,6 +40,6 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:text="@string/ok"
-            android:textColor="#69f0ae" />
+            android:textColor="#039d91" />
     </LinearLayout>
 </LinearLayout>

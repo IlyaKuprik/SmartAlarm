@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:text="@string/date"
             android:textColor="@color/alarm_background"
-            android:textSize="25dp" />
+            android:textSize="20dp" />
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -1,6 +1,7 @@
 package com.example.smartalarm;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -13,21 +14,21 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity{
-    private static final String ID_SAVER="idSaver";
+
+    private static final String PREFERENCES = "mTimeSaves" ;
 
     static ViewPager viewPager;
-
+    static SharedPreferences settings;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        settings = getSharedPreferences(PREFERENCES,MODE_PRIVATE);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -151,6 +152,11 @@ public class MainActivity extends AppCompatActivity{
 
         if (id == R.id.settings) {
             Intent intent = new Intent(getApplicationContext(),SettingsActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        if (id == R.id.manual) {
+            Intent intent = new Intent(getApplicationContext(),ManualActivity.class);
             startActivity(intent);
             return true;
         }

@@ -1,13 +1,10 @@
 package com.example.smartalarm;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -20,9 +17,13 @@ import android.widget.Toast;
 public class AlarmActivity extends AppCompatActivity {
     private Button button;
     private Button repeatButton;
+
     private MediaPlayer mp;
+
     private TextView name;
+
     static int repeatMinute = 3;
+
     private static final String RINGTONE = "mRingtone";
     private static final String REPEAT_MINUTE = "mMinute";
     private static final String PREFERENCES = "mPreferences";
@@ -75,17 +76,6 @@ public class AlarmActivity extends AppCompatActivity {
                 finish();
             }
         });
-    }
-
-    public static void saveRingtone(Uri uri) {
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString(RINGTONE,uri.toString());
-        editor.apply();
-    }
-    public static void saveRepeatMinute(int repeatMinute) {
-//        SharedPreferences.Editor editor = settings.edit();
-  //      editor.putInt(REPEAT_MINUTE, repeatMinute);
-    //    editor.apply();
     }
 }
 
