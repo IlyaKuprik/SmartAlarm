@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SmartAlarm</string>
+    <string name="app_name">Умный будильник</string>
     <string name="zero" />
     <string name="default_time">00:00</string>
     <string name="ok">готово</string>

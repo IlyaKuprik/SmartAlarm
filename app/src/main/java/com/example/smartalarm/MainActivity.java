@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity{
         settings = getSharedPreferences(PREFERENCES,MODE_PRIVATE);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle(R.string.app_name);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
