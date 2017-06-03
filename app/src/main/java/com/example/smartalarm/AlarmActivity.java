@@ -1,9 +1,11 @@
 package com.example.smartalarm;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -29,6 +31,7 @@ public class AlarmActivity extends AppCompatActivity {
     private static final String PREFERENCES = "mPreferences";
 
     static SharedPreferences settings;
+    boolean running = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,9 +61,24 @@ public class AlarmActivity extends AppCompatActivity {
                 mp.start();
             }
         }).start();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (running){
+                    Vibrator v = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+                    v.vibrate(1000);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                running = false;
                 mp.stop();
                 Toast.makeText(AlarmActivity.this, "Будильник выключен", Toast.LENGTH_SHORT).show();
                 finish();

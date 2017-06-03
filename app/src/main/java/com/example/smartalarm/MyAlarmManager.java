@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PowerManager;
-import android.os.Vibrator;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -53,9 +52,6 @@ public class MyAlarmManager extends BroadcastReceiver implements Serializable {
         intent1.putExtra("name",intent.getStringExtra("name"));
         intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent1);
-
-        Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-        v.vibrate(1000);
 
         wakeLock.release();
     }
